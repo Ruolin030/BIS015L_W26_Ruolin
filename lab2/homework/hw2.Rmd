@@ -38,7 +38,8 @@ x <- c(2, 8, 4, 6, NA, 4, 9, 9, 10, NA) #create a new vector
 ```
 
 ```{r}
-mean(x, na.rm = TRUE)
+#?mean
+mean(x, na.rm=T)
 
 ```
 

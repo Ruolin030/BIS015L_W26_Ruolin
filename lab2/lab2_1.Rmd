@@ -81,7 +81,14 @@ treatment+control
 Here we make a new object `my_experiment` that is the sum of the treatment and control. Notice that I use `_` and not spaces. 
 ```{r}
 my_experiment <- sum(treatment+control)
+```
+
+```{r}
 my_experiment
+```
+
+```{r}
+sum(treatment+control)
 ```
 
 We can also use the function sum to do the same thing. Notice that if I give a new object the same name as an existing object, the old one is replaced.
@@ -93,6 +100,11 @@ To learn more about the sum function, use the help command `?`.
 ```{r}
 ?sum
 ```
+
+```{r}
+?sd
+```
+
 
 ## Nomenclature
 We need to be careful about nomenclature when we write code. R allows us to give almost any name we want to an object, but there are exceptions. For example, we don't want to give a name to an object that is the same as a function in R.  
@@ -150,7 +162,7 @@ my_numeric <- 42
 my_integer <- 2L #adding an L automatically denotes an integer
 my_character <- "universe"
 my_logical <- FALSE
-``` m
+``` 
 
 To find out what type of data you are working with, use the `class()` function. This is important because sometimes we will need to change the type of data to perform certain analyses.
 ```{r}
@@ -168,11 +180,11 @@ is.integer(my_numeric)
 
 Let's convert my_numeric to an integer.
 ```{r}
-my_integer <- as.integer(my_numeric)
+my_numeric2 <- as.integer(my_numeric)
 ```
 
 ```{r}
-is.integer(my_integer)
+is.integer(my_numeric2)
 ```
 
 ## Missing Data
