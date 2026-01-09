@@ -17,18 +17,26 @@ getwd() #identify current working directory
 
 **2. Make a new folder in your lab 2 folder called `homework`. Now, change your current working directory to the `homework` folder using the setwd() function.**
 ```{r}
- setwd("~/Desktop/BIS015L_W26_Ruolin/lab2/homework")
+#setwd("~/Desktop/BIS015L_W26_Ruolin/lab2/homework")
 ```
 
 **3. Assign a new object `pi` to a value of 3.14159. You should now see the object `pi` in the environment window in the top right.** 
 ```{r}
 pi <- 3.14159
+pi
 ```
 
 **4. Write a code chunk that divides `pi` by 2. Use the help command `?` to learn how to use the `round` function to limit your result to 4 significant digits.**  
 ```{r}
 y <- pi/2 
+y
+```
+
+```{r}
 ?round
+```
+
+```{r}
 round(y, digits = 4)
 ```
 
@@ -40,7 +48,6 @@ x <- c(2, 8, 4, 6, NA, 4, 9, 9, 10, NA) #create a new vector
 ```{r}
 #?mean
 mean(x, na.rm=T)
-
 ```
 
 ## Knit and Upload

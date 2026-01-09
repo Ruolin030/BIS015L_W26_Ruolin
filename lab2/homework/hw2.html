@@ -395,18 +395,22 @@ used below.</strong></p>
 <p><strong>2. Make a new folder in your lab 2 folder called
 <code>homework</code>. Now, change your current working directory to the
 <code>homework</code> folder using the setwd() function.</strong></p>
-<pre class="r"><code> setwd(&quot;~/Desktop/BIS015L_W26_Ruolin/lab2/homework&quot;)</code></pre>
+<pre class="r"><code>#setwd(&quot;~/Desktop/BIS015L_W26_Ruolin/lab2/homework&quot;)</code></pre>
 <p><strong>3. Assign a new object <code>pi</code> to a value of 3.14159.
 You should now see the object <code>pi</code> in the environment window
 in the top right.</strong></p>
-<pre class="r"><code>pi &lt;- 3.14159</code></pre>
+<pre class="r"><code>pi &lt;- 3.14159
+pi</code></pre>
+<pre><code>## [1] 3.14159</code></pre>
 <p><strong>4. Write a code chunk that divides <code>pi</code> by 2. Use
 the help command <code>?</code> to learn how to use the
 <code>round</code> function to limit your result to 4 significant
 digits.</strong></p>
 <pre class="r"><code>y &lt;- pi/2 
-?round
-round(y, digits = 4)</code></pre>
+y</code></pre>
+<pre><code>## [1] 1.570795</code></pre>
+<pre class="r"><code>?round</code></pre>
+<pre class="r"><code>round(y, digits = 4)</code></pre>
 <pre><code>## [1] 1.5708</code></pre>
 <p><strong>5. Calculate the mean for: 2, 8, 4, 6, NA, 4, 9, 9, 10, NA.
 Please start by making a new vector <code>x</code> that holds these
