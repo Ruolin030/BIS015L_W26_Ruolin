@@ -39,7 +39,7 @@ In order to access the potential of R we need to assign values or other types of
 
 Assign a value to object 'x'. The '<-' symbol is read as 'gets'. In this case, x gets 42. Make sure that you are in the environment panel and you should see the value associated with 'x'. On a mac, you can push `option` and `-` to automatically generate the gets symbol.  
 ```{r}
-x <- 42
+x <- 42 #this means x gets the value 42
 ```
 
 To print the object to the screen, just type x.  
@@ -54,7 +54,7 @@ y <- 30
 
 The = symbol works, but is not a convention followed by most programmers.
 ```{r}
-
+z=10 #this will work, but will create problems
 ```
 
 Once objects have been created, you can do things with them.  
@@ -65,6 +65,7 @@ x+y
 ```{r}
 x/y
 ```
+
 
 Make two new objects, treatment and control. The value of treatment is 36 and the value of control is 38.
 ```{r}
@@ -149,7 +150,7 @@ my_numeric <- 42
 my_integer <- 2L #adding an L automatically denotes an integer
 my_character <- "universe"
 my_logical <- FALSE
-```
+``` m
 
 To find out what type of data you are working with, use the `class()` function. This is important because sometimes we will need to change the type of data to perform certain analyses.
 ```{r}
@@ -205,5 +206,6 @@ mean(new_vector)
 
 4. Recalculate the mean using the following code chunk. Why is the useful?  
 ```{r}
+?mean
 mean(new_vector, na.rm = TRUE) #removes NA values
 ```
