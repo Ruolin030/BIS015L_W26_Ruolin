@@ -54,7 +54,7 @@ y <- 30
 
 The = symbol works, but is not a convention followed by most programmers.
 ```{r}
-z=10 #this will work, but will create problems
+z=11 #this will work, but will create problems
 ```
 
 Once objects have been created, you can do things with them.  
