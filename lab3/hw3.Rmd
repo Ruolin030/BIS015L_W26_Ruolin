@@ -52,7 +52,7 @@ mountains <- tibble(name, height_in_feet, height_in_meters, first_climbed)
 
 **5. How many times have each of these mountains been climbed? Make a new vector `summits` and add it to the `mountains` data frame.**
 ```{r}
-summits <- c("")
+summits <- c(12800, 964, 187, 900  )
 ```
 
 **6. Which mountain has the highest number of fatalities? Make a new vector `fatalities` and add it to the `mountains` data frame.**
