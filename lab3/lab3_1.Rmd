@@ -29,7 +29,7 @@ getwd() #by default you are in the directory that you first opened
 A library is a collection of R functions and data sets. The [tidyverse](https://tidyverse.org/) is a collection of R packages designed for data science. For this course, we will be using many of the packages in the tidyverse. We load the tidyverse with the command below.  
 ```{r}
 library("tidyverse")
-#install.packages("package_name")
+#install.packages("packages_name")
 ```
 
 ## Data Structures
