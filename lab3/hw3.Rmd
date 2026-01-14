@@ -92,8 +92,6 @@ mountains <- read_csv("mountains_data.csv")
 ```{r}
 str(mountains)
 ```
-```{r}
-summary(mountains)
 ```
 
 ## Knit and Upload

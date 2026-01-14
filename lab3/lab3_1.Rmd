@@ -30,17 +30,18 @@ A library is a collection of R functions and data sets. The [tidyverse](https://
 ```{r}
 library("tidyverse")
 #install.packages("packages_name")
+#install.packages("tidyverse")
 ```
 
 ## Data Structures
 In addition to classes of data, R also organizes data in different ways. These are called data structures and include vectors, lists, matrices, data frames, and factors. Here, we will introduce vectors and data frames.  
 
-## Vectors
+## Vectors 
 Vectors are a common way of organizing data in R.  We create vectors using the `c` command. The `c` stands for concatenate. We used this command in lab 2.  
 
 A numeric vector.
 ```{r}
-my_vector <- c(10, 20, 30) #this makes a new vector
+my_vector <- c(10, 20, 30) #this makes a new vector. # each vector is a its own column in the data frame. columns=variables
 ```
 
 A character vector.
@@ -85,14 +86,14 @@ The data frame is the most common way to organize data within R. A data frame st
 
 Let's build separate vectors that include length (in), weight (oz), and sex of three [ruby-throated hummingbirds](https://www.audubon.org/field-guide/bird/ruby-throated-hummingbird).  
 ```{r}
-Sex <- c("male", "female", "male")
+Sex <- c("male", "female", "male") 
 Length <- c(3.2, 3.7, 3.4)
 Weight <- c(2.9, 4.0, 3.1)
 ```
 
 Since we work in the tidyverse, we use `tibble()` to create a data frame.  
 ```{r}
-hbirds <- tibble(Sex, Length, Weight)
+hbirds <- tibble(Sex, Length, Weight) 
 ```
 
 Notice that not only are the data neat and clean looking, there is also information provided about the class of data. `dbl` means that the value is a type of numeric [double precision floating point](http://uc-r.github.io/integer_double/).  
@@ -107,7 +108,7 @@ names(hbirds)
 
 What are the dimensions of the `hbirds` data frame? The `dim()` and `str()` commands provide this information.   
 ```{r}
-dim(hbirds) 
+dim(hbirds) #dimension(like 3*3)
 ```
 
 ```{r}
@@ -116,7 +117,7 @@ str(hbirds) #structure
 
 Let's use lowercase names when we create the data frame. We just changed to lowercase here, but we could use any names we wish.  
 
-Use lowercase always!
+Use lowercase always!!!!!!!!!!!
 ```{r}
 names(hbirds)
 ```
@@ -150,7 +151,9 @@ mean(hbirds$length)
 ## Writing Data to File
 We should save our hbirds data frame so we can use it again later! There are many ways to save data in R, here we write our data frame to a csv file. We use `row.names = FALSE` to avoid row numbers from printing out. 
 ```{r}
-write.csv(hbirds, "hbirds_data.csv", row.names=FALSE)
+write.csv(hbirds, "hbirds_data.csv", row.names=FALSE) 
+#row.names=FALSE: prevents R from saving row numbers as a fake column in your CSV file
+```
 ```
 
 ## That's it! Let's take a break and then move on to part 2!  

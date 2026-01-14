@@ -24,7 +24,7 @@ library("tidyverse")
 ## Data Frames
 In part 1, you learned how to work with vectors and data frames. For the remainder of the course, we will work exclusively with data frames. Recall that data frames store multiple classes of data. Last time, you were shown how to build data frames by combining multiple vectors using  `tibble()`.  
 
-We only use tibble() when working in the tidyverse. The equivalent command in base R "data.names()"
+We only use tibble() when working in the tidyverse. The equivalent command in base R "data.frames()"
 
 ## Importing Data
 Scientists often make their data available as supplementary material associated with a publication. This is excellent scientific practice as it insures repeatability by showing exactly how analyses were performed. As data scientists, we capitalize on this by importing data directly into R.  
@@ -93,7 +93,7 @@ In your lab 3 folder there is another folder titled `data`. Inside the `data` fo
 
 The data are from: Gaeta J., G. Sass, S. Carpenter. 2012. Biocomplexity at North Temperate Lakes LTER: Coordinated Field Studies: Large Mouth Bass Growth 2006. Environmental Data Initiative.  [link](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-ntl&identifier=267)  
 ```{r}
-fish <- read_csv("data/Gaeta_etal_CLC_data.csv") #data/ : tell R where it is
+fish <- read_csv("data/Gaeta_etal_CLC_data.csv") #data/ : tell R where it is. now, fish is in the folder "data"
 ```
 
 ## Additional summary functions
@@ -108,7 +108,7 @@ str(fish)
 
 We can summarize our data frame with the`summary()` function.  
 ```{r}
-summary(fish) #carefull NA
+summary(fish) #careful NA
 ```
 
 `glimpse()` is another useful summary function.
