@@ -56,7 +56,7 @@ summits <- c(12800, 964, 187, 900, 800)
 ```
 
 ```{r}
-mountains <- c(name, height_in_feet, height_in_meters, first_climbed, summits)
+mountains <- tibble(name, height_in_feet, height_in_meters, first_climbed, summits)
 ```
 
 **6. Which mountain has the highest number of fatalities? Make a new vector `fatalities` and add it to the `mountains` data frame.**
@@ -65,7 +65,7 @@ fatalities <- c(344, 96, 60, 22, 50) #Mount Everest has the highest number of fa
 ```
 
 ```{r}
-mountains <- c(name, height_in_feet, height_in_meters, first_climbed, summits, fatalities)
+mountains <- tibble(name, height_in_feet, height_in_meters, first_climbed, summits, fatalities)
 ```
 
 **7. What is the fatality rate (i.e., fatalities divided by summits) for each mountain? Create a new vector `fatality_rate` and add it to the `mountains` data frame.**
@@ -74,7 +74,7 @@ fatality_rate <- fatalities/summits
 ```
 
 ```{r}
-mountains <- c(name, height_in_feet, height_in_meters, first_climbed, summits, fatalities, fatality_rate)
+mountains <- tibble(name, height_in_feet, height_in_meters, first_climbed, summits, fatalities, fatality_rate)
 ```
 
 **8. Write your data frame to a .csv file called `mountains_data`.**
