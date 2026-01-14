@@ -79,7 +79,7 @@ mountains <- c(name, height_in_feet, height_in_meters, first_climbed, summits, f
 
 **8. Write your data frame to a .csv file called `mountains_data`.**
 ```{r}
-write.csv(mountains_data, "mountains_data.csv", row.names=FALSE)
+write.csv(mountains, "mountains_data.csv", row.names=FALSE)
 ```
 
 **9. Clear your environment panel by clicking on the broom icon. Then read in your `mountains_data.csv` file to a new object called `mountains`.**
