@@ -43,6 +43,7 @@ ggplot(data=msleep,
   geom_bar(mapping=aes(fill=vore))+
   labs(title="Number of Mammals in each vore type")
 ```
+
 ```{r}
 ggplot(data=msleep,
        mapping=aes(x=vore))+
@@ -52,7 +53,7 @@ ggplot(data=msleep,
 
 **4. What is the average length of time that mammals sleep?**
 ```{r}
-mean(msleep$sleep_total, na.rm=T )
+mean(msleep$sleep_total)
 ```
 
 **5. Use `summary()` to get a quick idea of the range of values for the variable `bodywt`.**
@@ -73,18 +74,46 @@ ggplot(data=msleep,
 ggplot(data=msleep,
        mapping=aes(x=bodywt, y=sleep_total))+
   geom_point()+
-  geom_smooth(method=lm, se=T)
-  labs(title="Body Weight vs. Total Sleep Time", x="Body Weight (Kg)", y="Total Sleep Time (Hs)")
+  geom_smooth(method=lm, se=T)+
+  labs(title="Body Weight vs. Total Sleep Time",
+       x="Body Weight (Kg)", y="Total Sleep Time (Hs)")
+
 ```
 
 **8. Which vore type tends to sleep the most? Build a plot to support your answer.**
 ```{r}
+names(msleep)
+```
 
+
+```{r}
+ggplot(data=msleep,
+      mapping=aes(x=vore))+
+  geom_bar(mapping=aes(fill=vore))
 ```
 
 **9. Is there a relationship between brain weight and body weight? Build a plot to support your answer.**
+```{r}
+names(msleep)
+```
+
+```{r}
+ggplot(data=msleep,
+       mapping=aes(x=brainwt,y=bodywt))+
+  geom_point()+
+  geom_smooth(method=lm, se=F)+
+  labs(title="Brain Weight vs. Body Weight",
+       x="Brain Weight (Kg)", y="Body Weight (Kg)")
+```
 
 **10. Build one plot of your choice that provides additional insight into the msleep dataset. Be sure to include appropriate labels and a title.**
+```{r}
+ggplot(data=msleep,
+       mapping=aes(x=sleep_rem, y=sleep_total))+
+  geom_point(mapping=aes(color=sleep_rem))+
+  geom_smooth(method=lm, se=F)
+  labs(title="Rem Sleep (Hs) vs. Total Sleep (Hs)", x="Rem Sleep(Hs)", y="Total Sleep (Hs)")
+```
 
 ## Knit and Upload
 Please knit your work as an .html file and upload to Canvas. Homework is due before the start of the next lab. No late work is accepted. Make sure to use the formatting conventions of RMarkdown to make your report neat and clean!  

@@ -176,7 +176,7 @@ How many individuals per species?
 ```{r}
 ggplot(data=penguins,
        mapping=aes(x=species))+
-  geom_bar(mapping=aes(color=species))
+  geom_bar(mapping=aes(color=species)) #color: the color of edges
 ```
 
 What if we want to use the color aesthetic like we did for `geom_point` above? Let's try...
@@ -190,7 +190,7 @@ This doesn't work because the color aesthetic is being applied to the bars thems
 ```{r}
 ggplot(data=penguins,
        mapping=aes(x=species))+
-  geom_bar(mapping=aes(fill=species)). #color:color of the edge
+  geom_bar(mapping=aes(fill=species)) #color:color of the edge
 ```
 
 ## Practice
