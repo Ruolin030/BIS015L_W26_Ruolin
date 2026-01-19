@@ -41,7 +41,7 @@ Vectors are a common way of organizing data in R.  We create vectors using the `
 
 A numeric vector.
 ```{r}
-my_vector <- c(10, 20, 30) #this makes a new vector. # each vector is a its own column in the data frame. columns=variables
+my_vector <- c(10, 20, 30) #this makes a new vector. # each vector is its own column in the data frame. columns=variables
 ```
 
 A character vector.

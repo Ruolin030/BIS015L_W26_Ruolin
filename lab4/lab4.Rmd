@@ -115,7 +115,7 @@ To add a regression (best of fit) line, we add another layer.
 ggplot(data=penguins,
        mapping=aes(x=body_mass, y=flipper_len))+
   geom_point(na.rm=T)+
-  geom_smooth(method=lm, se=T) 
+  geom_smooth(method=lm, se=T) #lm:linear model se: standard error
 ```
 
 This graph is fine, but it doesn't distinguish between species. It might be helpful for the reader to see how each species is represented. We can do this by mapping the color aesthetic to species.
