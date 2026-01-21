@@ -27,8 +27,7 @@ These data are from: Gorman KB, Williams TD, Fraser WR (2014). Ecological sexual
 ## Data Structure
 Once data have been uploaded, let's get an idea of its structure, contents, and dimensions.  
 ```{r}
-glimpse(penguins)
-
+glimpse(penguins) #dbl stands for double precision floating point number(it's a type of numeric variable). int: integer. chr: character
 penguins
 ```
 
@@ -48,6 +47,8 @@ These functions are often called verbs, and the format used for each is the same
 The verb `select()` allows you to pull out columns of interest from a dataframe; it does not affect the rows. To do this, just add the names of the columns of interest to the `select()` command. The order in which you add them, will determine the order in which they appear in the output.  
 
 For smaller dataframes, `select()` may not make much sense. However, for larger dataframes with many variables, `select()` is very useful. Let's look at the fish data again.
+
+select(): pull out columns of interest from a dataframe
 ```{r}
 names(penguins)
 ```
@@ -63,12 +64,12 @@ penguins <- penguins
 ```
 
 ```{r}
-select(penguins, species:flipper_length_mm)
+select(penguins, species:flipper_length_mm) # : stands for between(selects a continuous range of columns, e.x. select data from species to flipper_length_mm)
 ```
 
 The ! operator is useful in select. It allows us to select everything except the specified variables.
 ```{r}
-select(penguins, !body_mass_g)
+select(penguins, !body_mass_g) #! stands for remove
 ```
 
 Alternatively, you can use the `c()` function to exclude multiple columns.
@@ -93,22 +94,22 @@ select(penguins, ends_with("mm"))
 
 You can also select columns based on the class of data.  
 ```{r}
-select(penguins, where(is.numeric))
+select(penguins, where(is.numeric)) #pull out all the numerical date #numeric is a class of data
 ```
 
 There are a few verbs that go with `select()` because they deal with columns. One of these is `rename()`. `rename()` allows you to rename columns in a dataframe. The format is `new_name = old_name`.
 ```{r}
-rename(penguins, body_mass=body_mass_g)
+rename(penguins, body_mass=body_mass_g) #how to restore it in dataframe?
 ```
 
 Alternatively, you can rename from within select.
 ```{r}
-select(penguins, species, body_mass=body_mass_g)
+select(penguins, species, body_mass=body_mass_g) 
 ```
 
 The second is `relocate()`. `relocate()` allows you to move columns to different locations within a dataframe. Let's say we want to move `length` to be the first column in the dataframe.
 ```{r}
-relocate(penguins, year) 
+relocate(penguins, year) #remove the column to the first column
 ```
 
 ## Practice  
@@ -125,6 +126,10 @@ glimpse(msleep)
 ```
 
 3. Make a new dataframe that only includes the variables `order`, `genus`, and `bodywt.`
+```{r}
+select(msleep, order, genus, bodywt)
+```
+
 ```{r}
 msleep_focused <- select(msleep, order, genus, bodywt) #msleep_focused: output data
 ```

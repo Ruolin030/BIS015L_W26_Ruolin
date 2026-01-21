@@ -34,8 +34,9 @@ Unlike `select()`, `filter()` allows us to extract data that meet specific crite
 ```{r}
 glimpse(penguins)
 ```
+
 ```{r}
-filter(penguins, species=="Adelie")
+filter(penguins, species=="Adelie") #(data, column=="row") # 2==
 ```
 
 Similarly, if we are only interested in penguins with a body mass greater than or equal to 5500g we can use `filter()` to extract these observations.  
@@ -53,22 +54,22 @@ filter(penguins, species!="Chinstrap") #remove "Chinstrap"
 ## Using `filter()` with multiple observations  
 The `%in%` [operator](https://www.tutorialspoint.com/r/r_operators.htm) determines whether or not a value is part of a vector.    
 ```{r}
-filter(penguins, body_mass_g %in% c(5250, 5500)) #look for specfic values, 5200 and 5500
+filter(penguins, body_mass_g %in% c(5250, 5500)) #look for specific values, 5200 and 5500
 ```
 
 Alternatively, you can use `between` if you are looking for a range of specific values.  
 ```{r}
-filter(penguins, between(body_mass, 5250, 5500))
+filter(penguins, between(body_mass_g, 5250, 5500)) #between: a range from 5250 to 5500
 ```
 
 How would you use `%in%` to get the same result?
 ```{r}
-filter(penguins, body_mass_g %in% c(5250, 5300, 5350, 5400, 5450, 5500))
+filter(penguins, body_mass_g %in% c(5250, 5300, 5350, 5400, 5450, 5500)) #need to type each specific number we need
 ```
 
 You can also extract observations "near" a certain value but you need to specify a tolerance.  
 ```{r}
-filter(penguins, near(body_mass_g, 5400, tol=100)) #tol=tolerate #near(5350-5450)
+filter(penguins, near(body_mass_g, 5400, tol=100)) #tol=tolerate #tol: near(5350-5450) splits to 50
 ```
 
 ## Practice
@@ -78,6 +79,7 @@ The data are from: Gaeta J., G. Sass, S. Carpenter. 2012. Biocomplexity at North
 ```{r}
 fish <- read_csv("data/Gaeta_etal_CLC_data.csv")
 ```
+
 ```{r}
 glimpse(fish)
 ```
@@ -88,7 +90,7 @@ names(fish)
 ```
 
 ```{r}
-filter(fish, lakeid=="B0")
+filter(fish, lakeid=="BO")
 ```
 
 3. Filter the data to include all lakes except "AR".
@@ -109,12 +111,12 @@ filter(fish, between(scalelength, 2, 4) )
 ## Using `filter()` on multiple conditions
 You can also use `filter()` to extract data based on multiple conditions. Below we extract the Chinstrap penguins that have a body mass greater than 4500g.
 ```{r}
-filter(penguins, species=="Chinstrap" & body_mass_g> 4500)
+filter(penguins, species=="Chinstrap" & body_mass_g> 4500)  #&: and
 ```
 
 Notice that the `|` operator generates a different result. Why?
 ```{r}
-filter(penguins, species=="Chinstrap" | body_mass_g> 4500)
+filter(penguins, species=="Chinstrap" | body_mass_g> 4500) #|: or
 ```
 
 Rules:  
@@ -124,17 +126,18 @@ Rules:
 
 In this case, we filter out the penguins with a body mass over 5000g and a bill length over 50mm or a bill depth over 18mm.
 ```{r}
-filter(penguins, body_mass_g>5000, (bill_length_mm>50|bill_depth_mm>18)) #,=&
+filter(penguins, body_mass_g>5000, (bill_length_mm>50|bill_depth_mm>18)) #,stands for &
 ```
+
 
 ## Pipes `%>%` 
 In order to start combining `select()`, `filter()`, and other functions efficiently, we need to learn pipes. Pipes feed the output from one function into the input of another function.  
 
 Let's say we are only interested in the body mass of Gentoo penguins. We can use pipes to first select the species and body mass columns then filter that output only for Gentoo penguins. Notice that we only need to call the data one time.
 ```{r}
-penguins %>%      #shift+command+m: %>% select first when using select and filter
-  select(species, body_mass_g) %>% 
-  filter(species=="Gentoo")
+penguins %>%      #shift+command+m: %>%   #select goes first when using %>%  
+  select(species, body_mass_g) %>% #first select columns
+  filter(species=="Gentoo") #then select the specific row
 ```
 
 We can sort the output of `filter()` using the `arrange()` function. Here we filter for Gentoo penguins and then sort them by body mass in ascending order.
