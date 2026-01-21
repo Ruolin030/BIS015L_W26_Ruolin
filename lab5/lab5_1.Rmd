@@ -63,12 +63,12 @@ penguins <- penguins
 ```
 
 ```{r}
-select(penguins, species:flipper_len)
+select(penguins, species:flipper_length_mm)
 ```
 
 The ! operator is useful in select. It allows us to select everything except the specified variables.
 ```{r}
-select(penguins, !body_mass)
+select(penguins, !body_mass_g)
 ```
 
 Alternatively, you can use the `c()` function to exclude multiple columns.
@@ -78,17 +78,17 @@ select(penguins, !c(species, island, year, sex))
 
 For very large data frames with lots of variables, `select()` utilizes lots of different operators to make things easier. Let's say we are only interested in the variables that deal with length.
 ```{r}
-select(penguins, contains("len"))
+select(penguins, contains("mm"))
 ```
 
 `starts_with()`
 ```{r}
-select(penguins, start_with("bill"))
+select(penguins, starts_with("bill"))
 ```
 
 `ends_with()`
 ```{r}
-select(penguins, ends_with("len"))
+select(penguins, ends_with("mm"))
 ```
 
 You can also select columns based on the class of data.  
@@ -98,7 +98,7 @@ select(penguins, where(is.numeric))
 
 There are a few verbs that go with `select()` because they deal with columns. One of these is `rename()`. `rename()` allows you to rename columns in a dataframe. The format is `new_name = old_name`.
 ```{r}
-rename(penguins, body_mass_g=body_mass)
+rename(penguins, body_mass=body_mass_g)
 ```
 
 Alternatively, you can rename from within select.
@@ -131,8 +131,9 @@ msleep_focused <- select(msleep, order, genus, bodywt) #msleep_focused: output d
 
 4. What if we are only interested in the numeric variables? Make a new dataframe that is restricted to numerics.
 ```{r}
-select(msleep, where(as.numeric)
+select(msleep, where(is.numeric))
 ```
+
 
 5. Make a dataframe that includes all variables except `name.`
 ```{r}

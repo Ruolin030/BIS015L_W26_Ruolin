@@ -45,7 +45,8 @@ names(homerange)
 ```{r}
 ggplot(data=homerange,
        mapping=aes(x=class))+
-  geom_bar(mapping=aes(fill=class))
+  geom_bar(mapping=aes(fill=class))+
+  labs(title="Number in Each Class")
 ```
 
 **4. Are there more carnivores or herbivores represented in the data? Make a plot that shows the number in each trophic guild.**
@@ -54,14 +55,17 @@ names(homerange)
 ```
 
 ```{r}
-ggplot(date=homerange, 
+ggplot(data=homerange,
        mapping=aes(x=trophic.guild))+
-  geom_bar()
+  geom_bar(mapping=aes(fill=trophic.guild))+
+  labs(title="Number in Each Trophic Guild")
 ```
 
 **5. Which herbivorous mammals have homeranges greater than 1,000,000 m²? Show only the common name, order, mean homerange size, and mean body mass. Arrange the data in descending order by homerange size and show only the top 10 species.**
 ```{r}
-
+homerange %>%
+  select(trophic.guild, common.name, order, mean.hra.m2, mean.mass.g) %>%
+  filter
 ```
 
 **6. Which two species have the largest and smallest homerange sizes?**
