@@ -28,15 +28,7 @@ homerange <- read_csv("data/Tamburelloetal_HomeRangeDatabase.csv")
 
 **2. What is the structure of the `homerange` data? Does it have any NA's? Do a quick exploratory analysis of your choice below.**
 ```{r}
-str(homerange)
-```
-
-```{r}
 glimpse(homerange)
-```
-
-```{r}
-summary(homerange)
 ```
 
 It has NA's for preymass, log10.preymass and PRMR.
@@ -116,19 +108,11 @@ There is a relationship between body mass and homerange. As the body mass increa
 filter(homerange, taxon=="birds" | taxon== "mammals")
 ```
 ```{r}
-homerange_focused <- filter(homerange, taxon=="birds" | taxon== "mammals")
-```
-
-```{r}
-ggplot(data=homerange_focused,
-       mapping=aes(x=taxon, y=log10.hra))+
+homerange %>%
+  filter(taxon=="birds" | taxon== "mammals") %>% 
+  ggplot(mapping=aes(x=taxon, y=log10.hra))+
   geom_boxplot(mapping=aes(fill=taxon))+
   labs(title="homerange sizes of birds and animals")
-```
-
-
-```{r}
-names(homerange)
 ```
 
 **10. Do one additional exploratory analysis of your choice. Before writing the code, write the question you are trying to answer. The question should be biologically meaningful and appropriate for the data. It must include at least one `filter()`, `select()`, and `arrange()`.**
@@ -136,6 +120,7 @@ Question:Which carnivore mammals have homeranges smaller than 1000g? Only show t
 ```{r}
 names(homerange)
 ```
+
 ```{r}
 homerange %>%
   select(trophic.guild, common.name, class, mean.mass.g) %>%

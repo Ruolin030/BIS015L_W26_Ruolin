@@ -69,7 +69,7 @@ filter(penguins, body_mass_g %in% c(5250, 5300, 5350, 5400, 5450, 5500)) #need t
 
 You can also extract observations "near" a certain value but you need to specify a tolerance.  
 ```{r}
-filter(penguins, near(body_mass_g, 5400, tol=100)) #tol=tolerate #tol: near(5350-5450) splits to 50
+filter(penguins, near(body_mass_g, 5400, tol=100)) #tol=tolerate #tol: near(5300-5500) 
 ```
 
 ## Practice
