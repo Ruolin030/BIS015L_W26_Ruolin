@@ -160,11 +160,12 @@ penguins %>%
   filter(species=="Gentoo") %>% 
   slice_max(body_mass_g, n=1)
 ```
+
 ```{r}
 penguins %>%     
   select(species, body_mass_g) %>% 
   filter(species=="Gentoo") %>% 
-  slice_min(body_mass_g, n=1). #don't forget to specify the variable
+  slice_min(body_mass_g, n=1) #don't forget to specify the variable
 ```
 
 ## Practice

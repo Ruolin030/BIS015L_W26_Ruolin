@@ -103,7 +103,7 @@ rename(penguins, body_mass=body_mass_g)
 
 Alternatively, you can rename from within select.
 ```{r}
-select(penguins, species, body_mass_g=body_mass)
+select(penguins, species, body_mass=body_mass_g)
 ```
 
 The second is `relocate()`. `relocate()` allows you to move columns to different locations within a dataframe. Let's say we want to move `length` to be the first column in the dataframe.

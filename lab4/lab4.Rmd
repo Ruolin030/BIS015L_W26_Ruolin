@@ -82,7 +82,7 @@ names(penguins)
 
 ```{r}
 ggplot(data=penguins, 
-       mapping=aes(x=species, y=flipper_len))+
+       mapping=aes(x=species, y=flipper_length_mm))+
   geom_boxplot()
 ```
 
@@ -99,21 +99,21 @@ names(penguins)
 
 ```{r}
 ggplot(data=penguins,
-       mapping=aes(x=body_mass, y=flipper_len))+
+       mapping=aes(x=body_mass_g, y=flipper_length_mm))+
   geom_point()
 ```
 
 Notice the warning! R is telling us that there are some missing values in our data. This is common in real world data sets. R automatically omits these missing values when plotting. We can also deal with the NA's explicitly using the `na.rm=T` function.  
 ```{r}
 ggplot(data=penguins,
-       mapping=aes(x=body_mass, y=flipper_len))+
+       mapping=aes(x=body_mass_g, y=flipper_length_mm))+
   geom_point(na.rm=T)
 ```
 
 To add a regression (best of fit) line, we add another layer.
 ```{r}
 ggplot(data=penguins,
-       mapping=aes(x=body_mass, y=flipper_len))+
+       mapping=aes(x=body_mass_g, y=flipper_length_mm))+
   geom_point(na.rm=T)+
   geom_smooth(method=lm, se=T) #lm:linear model se: standard error
 ```
@@ -121,7 +121,7 @@ ggplot(data=penguins,
 This graph is fine, but it doesn't distinguish between species. It might be helpful for the reader to see how each species is represented. We can do this by mapping the color aesthetic to species.
 ```{r}
 ggplot(data=penguins,
-       mapping=aes(x=body_mass, y=flipper_len, color=species))+
+       mapping=aes(x=body_mass_g, y=flipper_length_mm, color=species))+
   geom_point(na.rm=T)+
   geom_smooth(method=lm, se=T) 
 ```
@@ -129,7 +129,7 @@ ggplot(data=penguins,
 The plot above looks good, but I think it's a bit messy having the regression line presented for each species. When we add the color aesthetic, it is passed down to all layers. To fix this, we can move the color aesthetic to just the geom_point layer.
 ```{r}
 ggplot(data=penguins,
-       mapping=aes(x=body_mass, y=flipper_len))+
+       mapping=aes(x=body_mass_g, y=flipper_length_mm))+
   geom_point(mapping=aes(color=species))+ #mapping:categorical variable, NOT numerical
   geom_smooth(method=lm, se=T) 
 ```
