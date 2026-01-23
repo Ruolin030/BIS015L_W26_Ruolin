@@ -62,12 +62,16 @@ penguins %>%
   filter(island %in% c("Biscoe", "Dream"))
 ```
 
+```{r}
+names(penguins)
+```
+
 3. Make a plot that shows the relationship between body mass and flipper length. How does this compare among different species?
 ```{r}
 penguins %>% 
-  select(body_mass_g, flipper_length_mm) %>% 
+  select(species, body_mass_g, flipper_length_mm) %>% 
   ggplot(mapping=aes(x=flipper_length_mm, y=body_mass_g))+
-  geom_point()+
+  geom_point(mapping=aes(color=species))+
   geom_smooth(method=lm, se=F)
 ```
 
@@ -107,13 +111,9 @@ penguins %>%
 What if we want to know which islands each species occurs on?
 ```{r}
 penguins %>% 
-  distinct(species, island, keep_all=T) #keep unique (island+species) combination!! unique combination
+  distinct(species, island, .keep_all=T) #keep unique (island+species) combination!! unique combination
 ```
-OR
-```{r}
-penguins %>% 
-  distinct(island, species, ,.keep_all=T) 
-```
+
 ```{r}
 penguins %>% 
   distinct(island, species) 
@@ -187,7 +187,7 @@ mammals %>%
 
 For this reason, it might be better to use `where` so we can specify only character columns.
 ```{r}
-mammals %>% 
+mammals <- mammals %>% 
   mutate(across(where(is.character), tolower)) 
 ```
 
@@ -223,14 +223,13 @@ names(mammals)
 
 
 ```{r}
-mammals %>% 
-  select(newborn, weaning, wean_mass, afr, max_life, litter_size, mass) %>% 
-  mutate(newborn_new=ifelse(newborn == -999, NA, newborn),
-         weaning_new=ifelse(weaning == -999, NA, weaning),
-         wean_mass_new=ifelse(wean_mass == -999, NA, wean_mass),
-         afr_new=ifelse(afr == -999, NA, afr),
-         max_life_new=ifelse(max_life == -999, NA, max_life),
-         litter_size_new=ifelse(litter_size == -999, NA, litter_size))
+mammals <- mammals %>% 
+  mutate(newborn=ifelse(newborn == -999, NA, newborn),
+         weaning=ifelse(weaning == -999, NA, weaning),
+         wean_mass=ifelse(wean_mass == -999, NA, wean_mass),
+         afr=ifelse(afr == -999, NA, afr),
+         max_life=ifelse(max_life == -999, NA, max_life),
+         litter_size=ifelse(litter_size == -999, NA, litter_size))
 ```
 
 2. In the mammals data, make a new column `mass_kg` that that converts mass from grams to kilograms. Select the columns genus, species, mass, and mass_kg, and arrange the data by mass_kg in descending order. What is the common name for the species with the highest mass?  
@@ -277,10 +276,34 @@ mammals %>%
   slice_max(max_life)
 ```
 
+```{r}
+glimpse(mammals)
+```
+
+```{r}
+mammals %>% 
+  ggplot(aes(x=order, y=log10(mass)))+
+  geom_boxplot()+
+  coord_flip()
+```
+
+```{r}
+mammals %>% 
+  distinct(order)
+```
+
+```{r}
+mammals %>% 
+  ggplot(aes(x=order))+
+  geom_bar()+
+  coord_flip()
+```
+
+
 5. Do larger mammals live longer?
 ```{r}
 mammals %>% 
-  ggplot(mapping=aes(x=log10(mass), y=max_life))+
+  ggplot(mapping=aes(x=log10(mass), y=log10(max_life)))+
   geom_point()+
   geom_smooth(method="lm")
 ```

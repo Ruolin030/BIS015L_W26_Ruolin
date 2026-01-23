@@ -1,6 +1,6 @@
 ---
 title: "Homework 6"
-author: "Your Name Here"
+author: "Ruolin Huang"
 date: "`r Sys.Date()`"
 output:
   html_document: 
@@ -45,8 +45,9 @@ gabon
 
 **4. Use `mutate()` Change the variables `HuntCat`, `LandUse`, and `TransectID` to factors. Be sure to store the output as a new dataframe and use it for the remaining questions.**
 ```{r}
- gabon %>% 
+ gabon <- gabon %>% 
   mutate(across(c(hunt_cat, land_use, transect_id), as.factor))
+gabon
 ```
 
 **5. Make a plot that shows the number of transects for each land use type.**
@@ -61,10 +62,6 @@ gabon %>%
   labs(title="number of transects for each land use type")
 ```
 
-```{r}
-
-```
-
 **6. How does vegetation richness compare among land use types?**
 ```{r}
 names(gabon)
@@ -75,35 +72,44 @@ gabon %>%
   select(veg_rich, land_use) %>% 
   ggplot(mapping=aes(x=veg_rich, y=land_use))+
   geom_boxplot(mapping=aes(fill=land_use))+
-  labs(x="vegation richness", y="land use types")
+  labs(x="vegetation richness", y="land use types")
 ```
 
 **7. For which land use type (national parks, logging, or neither) is average all species diversity the greatest?**
+
 ```{r}
-gabon %>% 
-  select(land_use, diversity_all_species) %>% 
-  slice_max(diversity_all_species, n=1)
+parking <- gabon %>% 
+  filter(land_use=="park")
 ```
 
 ```{r}
-gabon %>% 
-  select(land_use, diversity_all_species) %>% 
-  arrange(desc(diversity_all_species))
+mean(parking$diversity_all_species)
 ```
 
 ```{r}
-
+logging <- gabon %>% 
+  filter(land_use=="logging")
 ```
 
 ```{r}
-
+mean(logging$diversity_all_species)
 ```
+
+```{r}
+neither <- gabon %>% 
+  filter(land_use=="neither")
+```
+
+```{r}
+mean(neither$diversity_all_species)
+```
+2.425143>2.3575>2.232538
+Parking has the greatest average all species diversity.
 
 **8. Is there a relationship between vegetation richness and mammal species richness?**
 ```{r}
 names(gabon)
 ```
-
 ```{r}
 gabon %>% 
   ggplot(mapping=aes(x=veg_rich, y=rich_mammal_species))+
@@ -119,7 +125,6 @@ names(gabon)
 
 ```{r}
 gabon %>% 
-  select(veg_rich, veg_dbh) %>% 
   filter(veg_rich>15 | between(veg_dbh, 50, 60))
 ```
 
