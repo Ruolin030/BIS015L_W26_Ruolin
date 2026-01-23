@@ -87,11 +87,10 @@ write.csv(mountains, "mountains_data.csv", row.names=FALSE)
 mountains <- read_csv("mountains_data.csv")
 ```
 
-**10. Use a summary function of your choice to show the structure of your `mountains` data frame.**
+**10. 
+Use a summary function of your choice to show the structure of your `mountains` data frame.**
 ```{r}
 str(mountains)
 ```
-```
-
 ## Knit and Upload
 Please knit your work as an .html file and upload to Canvas. Homework is due before the start of the next lab. No late work is accepted. Make sure to use the formatting conventions of RMarkdown to make your report neat and clean!  
