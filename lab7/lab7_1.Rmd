@@ -66,7 +66,7 @@ Large mammals
 ```{r}
 msleep %>% 
   filter(bodywt>150) %>% 
-  summarise(mean_bodywt_large=mean(bodywt)) #give a new name=old name
+  summarise(mean_bodywt_large=mean(bodywt)) #give a new name(to the variable) = old name
 ```
 
 Small mammals
@@ -84,7 +84,7 @@ msleep %>%
             min_bodywt_large=min(bodywt),
             max_bodywt_large=max(bodywt),
             sd_bodywt_large=sd(bodywt),
-            total=n())
+            total=n()) #total=n(): number of observations(How many mammals have bodywt > 150), total is just the name of the new column
 ```
 
 Maybe you want to summarize all of the numeric variables in the data frame. You can use the `where()` function to select only the numeric variables.
@@ -119,21 +119,22 @@ msleep %>%
   filter(order == "Primates") %>% 
   summarize(mean_bodywt=mean(bodywt),
             min_bodywt=min(bodywt),
-            max_bodywt=max(bodywt))
+            max_bodywt=max(bodywt),
+            total=n())
 ```
 
 `n_distinct()` is a handy way of cleanly presenting the number of distinct observations. Notice that there are 9 genera with over 100 in body weight.
 ```{r}
 msleep %>% 
   filter(bodywt>100) %>% 
-  distinct() 
+  distinct()
 ```
 
 Here we show the number of distinct genera over 100 in body weight.
 ```{r}
 msleep %>% 
   filter(bodywt>100) %>% 
-  summarize(n_genera=n_distinct(genus)) #n_distinct(genus): count the number of genus
+  summarize(n_genera=n_distinct(genus)) #n_distinct(genus): count specific number of genus (n_genera is only a new variable name)
 ```
 
 Not to be confused with n(), which counts the total number of observations.
@@ -141,10 +142,6 @@ Not to be confused with n(), which counts the total number of observations.
 msleep %>% 
   filter(bodywt>100) %>% 
   summarize(total=n())
-```
-
-```{r}
-
 ```
 
 `pull()` is another useful verb that extracts a single column from a data frame as a vector.
@@ -168,8 +165,9 @@ Although `summarize()` is helpful, oftentimes we are only interested in counts. 
 For example, if we wanted to count the number of observations for each `vore` category in the `msleep` data frame we could do the following:
 ```{r}
 msleep %>% 
-  count(vore, sort=T) #sort=T: descending order #x=vore, y=n
+  count(vore, sort=T) #sort=T: descending order #x=vore, y=n. #count: include the repeated rows; distinct: only show unique row
 ```
+
 
 ```{r}
 msleep %>% 
@@ -177,12 +175,18 @@ msleep %>%
   ggplot(aes(x=vore, y=n))+
   geom_col() #use this when we have an x and a y
 ```
+```{r}
+msleep %>% #?
+  ggplot(mapping=aes(x=vore))+
+  geom_bar()
+```
 
 You can even combine multiple variables to get counts. For example, if we wanted to count the number of observations for each `vore` category within each `order` category we could do the following:
 ```{r}
 msleep %>% 
   count(vore, order)
 ```
+
 
 The tabyl() function from the janitor package is also very useful for producing counts and percentages.  
 ```{r}
