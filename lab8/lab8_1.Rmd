@@ -39,7 +39,7 @@ names(elephants)
 
 ```{r}
 elephants %>% 
-summarise(across(where(is.numeric),
+summarise(across(where(is.numeric),   #~mean: using function`mean`; .x: on every cell x
                  ~mean(.x, na.rm=T))) #it won't change names of variables. names are actually the mean of age, height, length and circumference.
 ```
 
@@ -82,7 +82,7 @@ elephants %>%
   group_by(years_of_sample_collection, sex) %>% 
   summarise(mean_estimated_age_years=mean(estimated_age_years, na.rm=T),
                                           n=n(),
-            .groups="keep") %>% 
+            .groups="keep") %>%  #.group="keep": keep the group
   arrange(sex)
 ```
 
@@ -98,7 +98,7 @@ elephants %>%
             median_estimated_age_years=median(estimated_age_years, na.rm=T),
             sd_estimated_age_years=sd(estimated_age_years, na.rm=T),
             n=n(),
-            .groups = "keep")
+            .groups = "keep") 
 ```
 
 ```{r}
