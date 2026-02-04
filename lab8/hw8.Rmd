@@ -1,6 +1,6 @@
 ---
 title: "Homework 8"
-author: "Your Name Here"
+author: "Ruolin Huang"
 date: "`r Sys.Date()`"
 output:
   html_document: 
@@ -33,13 +33,8 @@ names(fisheries_clean)
 ```
 
 ```{r}
-dim(fisheries_clean)
-```
-
-```{r}
 glimpse(fisheries_clean)
 ```
-
 
 2. Convert the following variables to factors: `period`, `continent`, `geo_region`, `country`, `scientific_name`, `common_name`, `taxonomic_code`, and `status`.
 ```{r}
@@ -61,16 +56,6 @@ fisheries_clean %>%
 5. The variables `common_name` and `taxonomic_code` both refer to species. How many unique species are represented in the data based on each of these variables? Are the numbers the same or different?
 ```{r}
 fisheries_clean %>% 
-  count(common_name) 
-```
-
-```{r}
-fisheries_clean %>% 
-  count(taxonomic_code)
-```
-
-```{r}
-fisheries_clean %>% 
   summarize(n_distinct(common_name), n_distinct(scientific_name))
 ```
 
@@ -78,7 +63,6 @@ fisheries_clean %>%
 ```{r}
 fisheries_clean %>% 
   filter(period=="2023") %>% 
-  select(country, period, catch) %>% 
   slice_max(catch, n=5)
 ```
 
@@ -87,38 +71,57 @@ fisheries_clean %>%
   filter(period=="2023") %>% 
   group_by(country) %>% 
   summarise(catch_total=sum(catch)) %>% 
-  arrange(desc(catch_total))
+  arrange(desc(catch_total), n=5)
 ```
+
 ```{r}
 fisheries_clean %>% 
   filter(period=="2023") %>% 
   summarise(catch_total=sum(catch)) %>% 
-  arrange(desc(catch_total))
+  slice_max(catch_total, n=10)
 ```
 
 7. In 2023, what were the top 10 most caught species? To keep things simple, assume `common_name` is sufficient to identify species. What does `NEI` stand for in some of the common names? How might this be concerning from a fisheries management perspective?
 ```{r}
 fisheries_clean %>% 
-  select(period, common_name, catch) %>% 
   filter(period=="2023") %>% 
-  slice_max(catch, n=10)
+  group_by(common_name) %>% 
+  summarise(total_catch=sum(catch),
+            .groups = "keep") %>% 
+  arrange(desc(total_catch))
 ```
+NEI stands for Not Elsewhere Included. Species with NEI are in danger.
 
 8. For the species that was caught the most above (not NEI), which country had the highest catch in 2023?
 ```{r}
-fisheries_clean %>% 
-  
+
 ```
+
 
 9. How has fishing of this species changed over the last decade (2013-2023)? Create a  plot showing total catch by year for this species.
 ```{r}
-
+fisheries_clean %>% 
+  filter(c(period>=2013 & period<=2023 & common_name=="Alaska pollock(=Walleye poll.)")) %>% 
+  group_by(period) %>% 
+  summarize(total_catch=sum(catch)) %>% 
+  ggplot(mapping=aes(x=period, y=total_catch))+
+  geom_point()+
+  labs(title="total catch by year for Alaska pollock(=Walleye poll.)", x="year", y="total catch")
 ```
+
+
 
 10. Perform one exploratory analysis of your choice. Make sure to clearly state the question you are asking before writing any code.
+Question: which geo_region had the lowest catch in 2020?
 ```{r}
-
+fisheries_clean %>% 
+  filter(period=="2020") %>% 
+  group_by(geo_region) %>% 
+  summarise(total_catch=sum(catch)) %>% 
+  arrange(total_catch)
 ```
+Polynesia had the lowest catch in 2020.
+
 
 ## Knit and Upload
 Please knit your work as an .html file and upload to Canvas. Homework is due before the start of the next lab. No late work is accepted. Make sure to use the formatting conventions of RMarkdown to make your report neat and clean!  
