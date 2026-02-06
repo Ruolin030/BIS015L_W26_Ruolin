@@ -187,11 +187,18 @@ qpcr_tidy <- qpcr_untidy %>%
 qpcr_tidy
 ```
 
-
 ```{r}
 qpcr_tidy %>% 
   separate(experiment, into=c("experiment", "e_number"), sep=3) %>% 
   separate(replicate, into=c("replicate", "r_number"), sep=3) 
+```
+
+
+```{r}
+qpcr_tidy %>% 
+  separate(experiment, into=c("experiment", "e_number"), sep=3) %>% 
+  separate(replicate, into=c("replicate", "r_number"), sep=3) %>% 
+  select(gene, experiment=e_number, replicate=r_number, `mRNA expression`)
 ```
 
 ## That's it! Let's move on to part 2! 
