@@ -73,7 +73,7 @@ heartrate2
 We need to start by separating the patient names from their sexes. `separate()` needs to know which column you want to split, the names of the new columns, and what to look for in terms of breaks in the data.
 ```{r}
 heartrate2 %>% 
-  separate(patient, into=c("patient", "gender"), sep="_")
+  separate(patient, into=c("patient", "gender"), sep="_") #separate at _ (where) 
 ```
 
 Another way of using separate is to specify the position of the split. In this case, we want to split the patient column at the last character.
@@ -85,8 +85,8 @@ heartrate2 %>%
 We would still need to deal with the "_" in the patient column. We can do this using the stringr package.
 ```{r}
 heartrate2 %>% 
-  separate(patient, into=c("patient", "gender"), sep=-1) %>% 
-  mutate(patient=str_remove(patient, "_")) #str: string
+  separate(patient, into=c("patient", "gender"), sep=-3) %>% 
+  mutate(patient=str_remove(patient, "_")) #str: string###
 ```
 
 ## Practice

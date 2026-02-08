@@ -74,9 +74,10 @@ Let's think about this another way- can we make a plot that shows the effect of 
 To fix this problem, we need to reshape the table to long format while keeping track of column names and values. We do this using `pivot_longer()`. Notice that the dimensions of the data frame change.  
 ```{r}
 heartrate_long <- heartrate %>% #DON"T FORGET RESTORE IT
-  pivot_longer(-patient,  #don't remove patient
-               names_to="drug",
-               values_to="heartrate")
+  pivot_longer(-patient,  #-: don't remove patient
+               names_to="drug", #columns' name
+               values_to="heartrate") 
+heartrate_long
 ```
 
 ```{r}
@@ -102,6 +103,7 @@ relig_income_long <- relig_income %>%
                values_to = "total") #move the count into a new column
 relig_income_long
 ```
+  #Don'know/refused should be NA.???
 
 ## Example 2: some column names are data
 Some (but not all) of the column names are data. We also have NA's.
@@ -113,13 +115,13 @@ billboard
 Solution 1: specify a range of columns that you want to pivot.
 ```{r}
 billboard %>% 
-  pivot_longer(wk1:wk76,
+  pivot_longer(wk1:wk76, #wk1 through w76
                names_to="week",
                values_to="rank",
                values_drop_na = T)
 ```
 
-Solution 2: OR, specify columns that you want to stay fixed.
+Solution 2: OR, specify columns that you want to stay fixed. ???
 ```{r}
 billboard %>% 
   pivot_longer(-c(artist, track, date.entered),
@@ -132,13 +134,14 @@ Solution 3: identify columns by a prefix, remove the prefix and all NA's.
 ```{r}
 billboard %>% 
   pivot_longer(
-    cols=starts_with("wk"),
+    cols=starts_with("wk"), #Select all columns whose names start with wk, and pivot those.
     names_to = "week",
     names_prefix = "wk", #gets rid of the wk
     values_to = "rank",
     values_drop_na = T
   )
 ```
+
 
 ## Practice  
 1. Import `plant_data.csv` as a new object `plant_data`.  
@@ -181,7 +184,7 @@ qpcr_tidy <- qpcr_untidy %>%
   pivot_longer(
     exp1_rep1:exp3_rep3,
     names_to = c("experiment", "replicate"),
-    names_sep = "_",
+    names_sep = "_", # separate at the "_"
     values_to = "mRNA expression"
   )
 qpcr_tidy
@@ -189,7 +192,7 @@ qpcr_tidy
 
 ```{r}
 qpcr_tidy %>% 
-  separate(experiment, into=c("experiment", "e_number"), sep=3) %>% 
+  separate(experiment, into=c("experiment", "e_number"), sep=3) %>% # sep=3 separate at the third position
   separate(replicate, into=c("replicate", "r_number"), sep=3) 
 ```
 
@@ -198,7 +201,7 @@ qpcr_tidy %>%
 qpcr_tidy %>% 
   separate(experiment, into=c("experiment", "e_number"), sep=3) %>% 
   separate(replicate, into=c("replicate", "r_number"), sep=3) %>% 
-  select(gene, experiment=e_number, replicate=r_number, `mRNA expression`)
+  select(gene, experiment=e_number, replicate=r_number, `mRNA expression`) # using ``: there is space bewtween mRNA and expression
 ```
 
 ## That's it! Let's move on to part 2! 

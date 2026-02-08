@@ -33,6 +33,7 @@ sydneybeaches <- read_csv("data/sydneybeaches.csv")
 ```
 
 2. Are these data "tidy" per the definitions of the tidyverse? How do you know? Are they in wide or long format?
+These data are not "tidy"
 ```{r}
 sydneybeaches <- sydneybeaches %>% 
   clean_names()
@@ -94,9 +95,14 @@ sydneybeaches_long %>%
 
 
 10. Explore the data! Do one analysis of your choice that includes a minimum of three lines of code.  
-
+Q: How do the numbers of enterocococci change over the years?
 ```{r}
-
+sydneybeaches_long %>% 
+  pivot_longer(-site,
+               names_to = "year",
+               values_to = "average_enterocococci_cfu_100ml") %>% 
+  ggplot(mapping=aes(x=year, y=average_enterocococci_cfu_100ml))+
+  geom_col(mapping=aes(fill=site))
 ```
 
 ## Knit and Upload
