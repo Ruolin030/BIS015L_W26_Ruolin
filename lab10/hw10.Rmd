@@ -40,6 +40,14 @@ sharks %>%
   arrange(desc(number_incidents))
 ```
 
+```{r}
+sharks %>% 
+  group_by(county) %>% 
+  count(county) %>% 
+  arrange(desc(n))
+```
+
+
 2.  Make a plot that shows the total number of incidents per county.
 ```{r}
 sharks %>% 
@@ -63,7 +71,8 @@ sharks %>%
   summarize(number_incidents=n()) %>% 
   ggplot(aes(x=month, y=number_incidents))+
   geom_col(aes(fill=month))+
-  labs(title="total number of incidents by month")
+  labs(title="Total number of incidents by month")+
+  theme(plot.title=element_text(size=rel(1.5), hjust=.5))
 ```
 
 4. Is there a time of day when most attacks occur? Make a plot that shows the total number of incidents by time of day. Which time of day has the highest number of incidents?  
@@ -72,27 +81,33 @@ sharks %>%
   group_by(day) %>% 
   summarize(number_incidents=n()) %>% 
   ggplot(aes(x=day, y=number_incidents))+
-  geom_col(aes(fill=day))+
-  coord_flip()
+  geom_col(aes(fill=day, x=reorder(day, number_incidents)))+
+  coord_flip()+
+  labs(title="Total number of incidents by time of day", x="Day", y="Total number of incidents by time of day")+
+  theme(plot.title = element_text(size=rel(1.5), hjust = .5))
 ```
 
 5. How do the number and types of injuries compare by county? Make a table that shows the number of injury types by county. Which county has the highest number incidents? (hint: your table should be in wide format)
 ```{r}
 sharks_wide <- sharks %>% 
   group_by(county) %>% 
-  summarize(number_incidents=n()) %>%
-  pivot_wider(names_from = "county",
-              values_from = "number_incidents") %>% 
-  clean_names()
+  count(injury) %>% 
+  pivot_wider(names_from = "injury",
+              values_from = "n")  
 sharks_wide
+  
 ```
 
 
 6. Use the table from #5 to make a plot that shows the total number of incidents by county.
 ```{r}
-sharks_wide %>% 
-  ggplot(aes(x=county, y=injury))+
-  geom_col()
+sharks %>% 
+  group_by(county) %>% 
+  summarize(number_incidents=n()) %>% 
+  ggplot(aes(x=county, y=number_incidents))+
+  geom_col(aes(fill=county))+
+  coord_flip()+
+  labs(title="Total number of incidents per county", y="Total number of incidents")
 ```
 
 7. In the data, `mode` refers to a type of activity. Which activity is associated with the highest number of incidents?
@@ -111,7 +126,8 @@ sharks %>%
   arrange(desc(number_incidents)) %>% 
   ggplot(aes(x=mode, y=number_incidents))+
   geom_col(aes(fill=mode))+
-  labs(title="Number of incidents by activity", x="activity")+
+  labs(title="Number of incidents by activity", x="Activity", y="Number of incidents")+
+  theme(plot.title = element_text(size=rel(1.5), hjust=.5))+
   coord_flip()
 ```
 
@@ -129,7 +145,9 @@ sharks %>%
 sharks %>% 
   filter(species=="White") %>% 
   ggplot(aes(x=injury))+
-  geom_bar(na.rm=T, aes(fill=injury))
+  geom_bar(na.rm=T, aes(fill=injury))+
+  labs(title="Number and types of incidents for incidents for White", x="Types of incidents for White")+
+  theme(plot.title=element_text(hjust=.5))
 ```
 
 ## Knit and Upload

@@ -148,7 +148,7 @@ homerange %>%
   geom_bar(position = position_fill())+
   coord_flip()
 ```
-```
+
 
 
 ## Practice
@@ -160,6 +160,7 @@ penguins %>%
   ggplot(aes(x=island))+
   geom_bar(aes(fill=species))
 ```
+
 
 ```{r}
 penguins %>% 
