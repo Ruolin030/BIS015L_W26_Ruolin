@@ -43,8 +43,13 @@ p <- homerange %>%
 
 Play with point size by adjusting the `size` argument.
 ```{r}
-p+geom_point(size=2.5) #over plotting
+p+geom_point(size=2) #over plotting(can't tell the difference)
 ```
+
+```{r}
+p+geom_jitter(size=2)
+```
+
 
 We can color the points by a categorical variable.
 ```{r}
@@ -67,7 +72,7 @@ colors()
 
 ```{r}
 # Plot all available point shapes
-df <- data.frame(x = 1:25, y = rep(1, 25), shape = 0:24) #0-14 outline shape(will NOT recognize outline shape), 15-24:filled shape
+df <- data.frame(x = 1:25, y = rep(1, 25), shape = 0:24) #0-14 outline shape(will NOT recognize outline shape), 15-20:filled shape
 
 ggplot(df, aes(x, y)) +
   geom_point(aes(shape = factor(shape)), size = 5, fill = "lightblue") +
@@ -97,6 +102,11 @@ homerange %>%
 
 By specifying `fill=trophic.guild` we build a stacked bar plot that shows the proportion of a given taxonomic group that is an herbivore or carnivore.
 ```{r}
+names(homerange)
+```
+
+
+```{r}
 homerange %>% 
   ggplot(aes(x=taxon, fill=trophic_guild))+
   geom_bar()+
@@ -118,7 +128,7 @@ Here is the same plot oriented vertically.
 homerange %>% 
   ggplot(aes(x=taxon, fill=trophic_guild))+
   geom_bar(position="dodge")+
-  theme(axis.text_x=element_text(angle=60, hjust=1))+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+
   coord_flip()+
   labs(title="Observation By Taxon", x="Taxonomic Group", y=NULL) #take away the y axis label
 ```
@@ -128,9 +138,18 @@ We can also scale all bars to a percentage.
 homerange %>% 
   ggplot(aes(x=taxon, fill=trophic_guild))+
   geom_bar(position = position_fill())+
-  scale_y_continuous(labels=scales::percent)+
+  scale_y_continuous(labels=scales::percent)+ #???
   coord_flip()
 ```
+
+```{r}
+homerange %>% 
+  ggplot(aes(x=taxon, fill=trophic_guild))+
+  geom_bar(position = position_fill())+
+  coord_flip()
+```
+```
+
 
 ## Practice
 For this practice, let's use the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/articles/intro.html) data.  
@@ -155,6 +174,7 @@ penguins %>%
   ggplot(aes(x=island, fill=sex))+
   geom_bar(position="dodge")
 ```
+
 
 ## Using `group`
 In addition to `fill`, `group` is an aesthetic that accomplishes the same function but does not add color. It groups data for plotting.

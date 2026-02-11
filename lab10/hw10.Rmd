@@ -36,16 +36,16 @@ sharks <-
 ```{r}
 sharks %>% 
   group_by(county) %>% 
-  summarize(injury=n(), .groups = "keep") %>% 
-  arrange(desc(injury))
+  summarize(number_incidents=n()) %>% 
+  arrange(desc(number_incidents))
 ```
 
 2.  Make a plot that shows the total number of incidents per county.
 ```{r}
 sharks %>% 
   group_by(county) %>% 
-  summarize(injury=n()) %>% 
-  ggplot(aes(x=county, y=injury))+
+  summarize(number_incidents=n()) %>% 
+  ggplot(aes(x=county, y=number_incidents))+
   geom_col(aes(fill=county))+
   coord_flip()+
   labs(title="Total number of incidents per county", y="Total number of incidents")
@@ -60,8 +60,8 @@ sharks <- sharks %>%
 ```{r}
 sharks %>% 
   group_by(month) %>% 
-  summarize(injury=n()) %>% 
-  ggplot(aes(x=month, y=injury))+
+  summarize(number_incidents=n()) %>% 
+  ggplot(aes(x=month, y=number_incidents))+
   geom_col(aes(fill=month))+
   labs(title="total number of incidents by month")
 ```
@@ -70,8 +70,8 @@ sharks %>%
 ```{r}
 sharks %>% 
   group_by(day) %>% 
-  summarize(injury=n()) %>% 
-  ggplot(aes(x=day, y=injury))+
+  summarize(number_incidents=n()) %>% 
+  ggplot(aes(x=day, y=number_incidents))+
   geom_col(aes(fill=day))+
   coord_flip()
 ```
@@ -79,46 +79,37 @@ sharks %>%
 5. How do the number and types of injuries compare by county? Make a table that shows the number of injury types by county. Which county has the highest number incidents? (hint: your table should be in wide format)
 ```{r}
 sharks_wide <- sharks %>% 
-  count(injury) %>% 
-  pivot_wider(names_from = "injury",
-              values_from = "n") %>% 
+  group_by(county) %>% 
+  summarize(number_incidents=n()) %>%
+  pivot_wider(names_from = "county",
+              values_from = "number_incidents") %>% 
   clean_names()
 sharks_wide
-```
-
-```{r}
-sharks %>% 
-  pivot_wider(names_from = "injury",
-              values_from = "n") %>% 
-```
-
-```{r}
-sharks %>% 
-  count(injury)
 ```
 
 
 6. Use the table from #5 to make a plot that shows the total number of incidents by county.
 ```{r}
 sharks_wide %>% 
-  ggplot(aes())
+  ggplot(aes(x=county, y=injury))+
+  geom_col()
 ```
 
 7. In the data, `mode` refers to a type of activity. Which activity is associated with the highest number of incidents?
 ```{r}
 sharks %>% 
   group_by(mode) %>% 
-  summarize(injury=n()) %>% 
-  arrange(desc(injury))
+  summarize(number_incidents=n()) %>% 
+  arrange(desc(number_incidents))
 ```
 
 8. Make a plot that compares the number of incidents by activity.
 ```{r}
 sharks %>% 
   group_by(mode) %>% 
-  summarize(injury=n()) %>% 
-  arrange(desc(injury)) %>% 
-  ggplot(aes(x=mode, y=injury))+
+  summarize(number_incidents=n()) %>% 
+  arrange(desc(number_incidents)) %>% 
+  ggplot(aes(x=mode, y=number_incidents))+
   geom_col(aes(fill=mode))+
   labs(title="Number of incidents by activity", x="activity")+
   coord_flip()
@@ -129,8 +120,8 @@ sharks %>%
 sharks %>% 
   filter(!species=="NA") %>% 
   group_by(species) %>% 
-  summarise(injury=n()) %>% 
-  arrange(desc(injury))
+  summarise(number_incidents=n()) %>% 
+  arrange(desc(number_incidents))
 ```
 
 10. Are all incidents involving Great White's fatal? Make a plot that shows the number and types of incidents for Great White's only.  

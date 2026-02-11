@@ -71,7 +71,7 @@ life_history %>%
 life_history %>% 
   group_by(order) %>% 
   summarize(mean_mass=mean(mass, na.rm=T)) %>% 
-  arrange(desc(mean_mass)) %>% 
+  arrange(desc(mean_mass)) %>% ??
   ggplot(mapping=aes(x=order, y=mean_mass))+
   geom_col()+
   coord_flip()
@@ -79,7 +79,7 @@ life_history %>%
 
 There are a few problems here. First, the y-axis is in scientific notation. We can fix this by adjusting the options for the session.
 ```{r}
-options(scipen=999) #cancels scientific notation for the session
+options(scipen=999) #cancels scientific notation for the session ???
 ```
 
 Next, the y-axis is not on a log scale. We can fix this by adding `scale_y_log10()`.
@@ -100,13 +100,13 @@ life_history %>%
   group_by(order) %>% 
   summarize(mean_mass=mean(mass, na.rm=T)) %>% 
   arrange(desc(mean_mass)) %>% 
-  ggplot(mapping=aes(x=reorder(order, mean_mass),  y=mean_mass))+
+  ggplot(mapping=aes(x=reorder(order, mean_mass),  y=mean_mass))+ #Sort the orders by mean_mass
   geom_col()+
   coord_flip()+
   scale_y_log10()
 ```
 
-## Scatterplots
+## Scatterplots #compare two continuous variables 
 Scatter plots allow for comparisons of two continuous variables. Make a scatterplot that compares gestation time and wean mass.
 ```{r}
 life_history %>% 
@@ -157,7 +157,7 @@ life_history %>%
   geom_smooth(method=lm, se=F, na.rm=T)+
   scale_x_log10()+
   labs(title="Mass vs. Litter size", x="Mass(g)", y="Litter Size")+
-  theme(plot.title=element_text(size=rel(2), hjust=.5))
+  theme(plot.title=element_text(size=rel(2), hjust=.5)) #size: front size; rel: relative size; hjust: horizontal justification(left/center/right)
 ```
 
 ## That's it! Let's take a break and then move on to part 2!  
