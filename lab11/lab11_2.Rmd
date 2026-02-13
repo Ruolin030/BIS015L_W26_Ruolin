@@ -63,6 +63,7 @@ Have a look at the `linedraw` theme; I am adding it as another layer.
 p + theme_linedraw()+
   theme(axis.text.x = element_text(angle = 60, hjust=1))
 ```
+
 ```{r}
 p + theme_grey()+
   theme(axis.text.x = element_text(angle = 60, hjust=1))

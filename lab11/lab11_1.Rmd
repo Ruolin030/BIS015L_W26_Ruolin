@@ -52,6 +52,7 @@ gap %>%
   theme(axis.text.x = element_text(angle=60, hjust=1))+
   labs(title="GDP per Capital in the USA, 2000-2025", x="Year", y="GDP")
 ```
+
 ```{r}
 glimpse(gap)
 ```
