@@ -64,6 +64,7 @@ gapminder %>%
   arrange(desc(pop_growth))
 ```
 
+OR
 ```{r}
 gapminder %>% 
   select(country, year, pop) %>% 
@@ -107,7 +108,7 @@ gapminder %>%
   labs(title="Distribution of Life Expectancy for All Countries in 1925 and 2025", x="Life Expectancy", y=NULL)+
   theme(plot.title = element_text(hjust=.5))
 ```
-
+The distribution of the life expectancy shifts to the right.
 
 
 7. We are interested in the relationship between per capita GDP and life expectancy; i.e. does having more money help you live longer in 2025? Show this as a plot. (Suggestion! Remove Monaco as an extreme outlier.)
@@ -146,12 +147,33 @@ gapminder %>%
 
 10. Do one analysis of your choice that includes a table and plot as outputs.
 ```{r}
-
+gapminder %>% 
+  filter(year==2025) %>% 
+  select(country, pop, gdp) %>% 
+  group_by(country) %>% 
+  arrange(desc(gdp))
 ```
 
 ```{r}
-
+gapminder %>% 
+  filter(year==1925) %>% 
+  select(country, pop, gdp) %>% 
+  group_by(country) %>% 
+  arrange(desc(gdp))
 ```
+
+```{r}
+gapminder %>%
+  filter(year %in% c(1925, 2025))%>%
+  mutate(year=factor(year)) %>% 
+  ggplot(aes(x=pop, y=gdp, color=year))+
+  geom_point()+
+  geom_smooth(method=lm, se=F)+
+  scale_x_log10()+
+  scale_y_log10()
+```
+Generally, the population size and GDP per capita are not directly proportional in either year. There is no direct relationship between population size and GDP per capita.
+
 
 ## Knit and Upload
 Please knit your work as an .html file and upload to Canvas. Homework is due before the start of the next lab. No late work is accepted. Make sure to use the formatting conventions of RMarkdown to make your report neat and clean! 
