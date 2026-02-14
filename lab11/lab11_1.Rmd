@@ -44,7 +44,7 @@ Line plots are great when you need to show changes over time. Let's see if we ca
 Let's start by making a clear x and y so we know what we are going to plot.
 ```{r}
 gap %>% 
-  filter((year>=2000 & year<=2025) & country=="USA") %>% 
+  filter((year>=2000 & year<=2025) & country=="USA") %>% #filter(between(year, 2000, 2025) & country=="USA")?
   ggplot(aes(x=year, y=gdp))+
   geom_line()+
   geom_point(shape=5)+

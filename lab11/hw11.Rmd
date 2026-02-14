@@ -71,7 +71,7 @@ gapminder %>%
   pivot_wider(names_from = "year",
               values_from = "pop",
               names_prefix = "pop_") %>% 
-  mutate(pop_growth=`pop_2025`-`pop_1925`) %>% 
+  mutate(pop_growth=pop_2025-pop_1925) %>% 
   arrange(desc(pop_growth))
 ```
 
@@ -89,7 +89,8 @@ gapminder %>%
 5. Has global life expectancy changed between 1925 and 2025? Show the min, median, mean, and max for all countries (combined) in the dataset.
 ```{r}
 gapminder %>% 
-  group_by(country) %>% 
+  filter(year %in% c(1925, 2025)) %>% 
+  group_by(year) %>% 
   summarize(min_country=min(lex, na.rm=T),
             median_country=median(lex, na.rm=T),
             mean_country=mean(lex, na.rm=T),
@@ -128,16 +129,13 @@ gapminder %>%
   pivot_wider(names_from = "year",
               values_from = "gdp") %>% 
   mutate(gdp_in_50ys=`2025`-`1975`) %>% 
-  slice_max(gdp_in_50ys, n=5) %>% 
-  ggplot(aes(x=country, y=gdp_in_50ys))+
-  geom_col(aes(fill=country))+
-  labs(title="Absolute GDP per capita growth over the past 50 years", x="Country", y="GDP")
+  slice_max(gdp_in_50ys, n=5) 
 ```
 
 9. How does per capita GDP growth compare between these same five countries over the past 50 years? Show this as a plot.
 ```{r}
 gapminder %>% 
-  filter(!country=="Monaco" & between(year, 1975, 2025) &c(country=="Guyana" | country=="Ireland" | country=="Luxembourg" | country=="Norway" | country=="Singapore")) %>%
+  filter(between(year, 1975, 2025) & c(country=="Guyana" | country=="Ireland" | country=="Luxembourg" | country=="Norway" | country=="Singapore")) %>%
   select(country, year, gdp) %>% 
   ggplot(aes(x=year, y=gdp, color=country))+
   geom_line()+

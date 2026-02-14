@@ -47,7 +47,7 @@ p+geom_point(size=2) #over plotting(can't tell the difference)
 ```
 
 ```{r}
-p+geom_jitter(size=2)
+p+geom_jitter(size=2) 
 ```
 
 
