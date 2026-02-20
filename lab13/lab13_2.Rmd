@@ -148,16 +148,14 @@ names(spider_with_loc)
 ```{r}
 spider_records_locations <- spider_records_locations %>% 
   mutate(date=dmy(date))
+spider_records_locations
 ```
 
 4. Save your final data to a `.csv`.
 ```{r}
-write.csv(spider_records_locations, file="spider_records_locations.csv")
+write.csv(spider_records_locations, file="data/spider_records_locations.csv")
 ```
 
-```{r}
-getwd()
-```
 
 ## That's it, let's take a break!   
 

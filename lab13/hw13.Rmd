@@ -58,8 +58,8 @@ summary(amniota_no_na)
 ```
 
 ```{r}
-amniota_no_na %>% 
-  replace_with_na_all(condition=~.x %in% c(common_na_numbers, common_na_numbers))
+amniota_no_na <- amniota_no_na %>% 
+  replace_with_na(replace = list(female_maturity_d=-30258.71100))
 ```
 
 5. Use `naniar` to visualize the number of NA's in each variable. Which variables have the most NA's?
@@ -82,7 +82,8 @@ amniota_no_na %>%
   group_by(class) %>% 
   miss_var_summary()
 ```
-Yes, this results make sense biologically; because mammals do not lay eggs, they don't have values in the egg mass. NA's in mammals literally represent 0.
+Yes, this result for mammalia makes sense biologically; because mammals do not lay eggs, they don't have values for the egg mass. For birds and reptiles, NA's in egg mass may represent missing data.
 
-## Knit and Upload
+Knit and Upload
+
 Please knit your work as an .html file and upload to Canvas. Homework is due before the start of the next lab. No late work is accepted. Make sure to use the formatting conventions of RMarkdown to make your report neat and clean! 
