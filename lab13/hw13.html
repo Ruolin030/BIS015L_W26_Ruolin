@@ -9,9 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Your Name Here" />
+<meta name="author" content="Ruolin Huang" />
 
-<meta name="date" content="2026-02-18" />
+<meta name="date" content="2026-02-19" />
 
 <title>Homework 13</title>
 
@@ -375,8 +375,8 @@ display: none;
 
 
 <h1 class="title toc-ignore">Homework 13</h1>
-<h4 class="author">Your Name Here</h4>
-<h4 class="date">2026-02-18</h4>
+<h4 class="author">Ruolin Huang</h4>
+<h4 class="date">2026-02-19</h4>
 
 </div>
 
@@ -408,24 +408,264 @@ birds, mammals, and reptiles.” <em>Ecology</em>, <em>96</em>, 3109. doi:
 <pre class="r"><code>amniota &lt;- read_csv(&quot;data/amniota.csv&quot;) %&gt;% 
   clean_names()</code></pre>
 <ol style="list-style-type: decimal">
-<li><p>Do some exploratory analysis of the <code>amniota</code> data
-set. Use the function(s) of your choice. Try to get an idea of how NA’s
-are represented in the data.</p></li>
-<li><p>Make any necessary replacements in the data such that all NA’s
-appear as “NA”.</p></li>
-<li><p>How many total NA’s are in the data set? Use the package
+<li>Do some exploratory analysis of the <code>amniota</code> data set.
+Use the function(s) of your choice. Try to get an idea of how NA’s are
+represented in the data.</li>
+</ol>
+<pre class="r"><code>glimpse(amniota)</code></pre>
+<pre><code>## Rows: 21,322
+## Columns: 36
+## $ class                                 &lt;chr&gt; &quot;Aves&quot;, &quot;Aves&quot;, &quot;Aves&quot;, &quot;Aves&quot;, …
+## $ order                                 &lt;chr&gt; &quot;Accipitriformes&quot;, &quot;Accipitrifor…
+## $ family                                &lt;chr&gt; &quot;Accipitridae&quot;, &quot;Accipitridae&quot;, …
+## $ genus                                 &lt;chr&gt; &quot;Accipiter&quot;, &quot;Accipiter&quot;, &quot;Accip…
+## $ species                               &lt;chr&gt; &quot;albogularis&quot;, &quot;badius&quot;, &quot;bicolo…
+## $ subspecies                            &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ common_name                           &lt;chr&gt; &quot;Pied Goshawk&quot;, &quot;Shikra&quot;, &quot;Bicol…
+## $ female_maturity_d                     &lt;dbl&gt; -999.000, 363.468, -999.000, -99…
+## $ litter_or_clutch_size_n               &lt;dbl&gt; -999.000, 3.250, 2.700, -999.000…
+## $ litters_or_clutches_per_y             &lt;dbl&gt; -999, 1, -999, -999, 1, -999, -9…
+## $ adult_body_mass_g                     &lt;dbl&gt; 251.500, 140.000, 345.000, 142.0…
+## $ maximum_longevity_y                   &lt;dbl&gt; -999.00000, -999.00000, -999.000…
+## $ gestation_d                           &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ weaning_d                             &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ birth_or_hatching_weight_g            &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ weaning_weight_g                      &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ egg_mass_g                            &lt;dbl&gt; -999.00, 21.00, 32.00, -999.00, …
+## $ incubation_d                          &lt;dbl&gt; -999.00, 30.00, -999.00, -999.00…
+## $ fledging_age_d                        &lt;dbl&gt; -999.00, 32.00, -999.00, -999.00…
+## $ longevity_y                           &lt;dbl&gt; -999.00000, -999.00000, -999.000…
+## $ male_maturity_d                       &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ inter_litter_or_interbirth_interval_y &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ female_body_mass_g                    &lt;dbl&gt; 352.500, 168.500, 390.000, -999.…
+## $ male_body_mass_g                      &lt;dbl&gt; 223.000, 125.000, 212.000, 142.0…
+## $ no_sex_body_mass_g                    &lt;dbl&gt; -999.0, 123.0, -999.0, -999.0, -…
+## $ egg_width_mm                          &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ egg_length_mm                         &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ fledging_mass_g                       &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ adult_svl_cm                          &lt;dbl&gt; -999.00, 30.00, 39.50, -999.00, …
+## $ male_svl_cm                           &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ female_svl_cm                         &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ birth_or_hatching_svl_cm              &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ female_svl_at_maturity_cm             &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ female_body_mass_at_maturity_g        &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ no_sex_svl_cm                         &lt;dbl&gt; -999, -999, -999, -999, -999, -9…
+## $ no_sex_maturity_d                     &lt;dbl&gt; -999, -999, -999, -999, -999, -9…</code></pre>
+<pre class="r"><code>amniota %&gt;% 
+  summarize(across(everything(), ~sum(.==-999)))</code></pre>
+<pre><code>## # A tibble: 1 × 36
+##   class order family genus species subspecies common_name female_maturity_d
+##   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;int&gt;   &lt;int&gt;      &lt;int&gt;       &lt;int&gt;             &lt;int&gt;
+## 1     0     0      0     0       0      21322        1641             17849
+## # ℹ 28 more variables: litter_or_clutch_size_n &lt;int&gt;,
+## #   litters_or_clutches_per_y &lt;int&gt;, adult_body_mass_g &lt;int&gt;,
+## #   maximum_longevity_y &lt;int&gt;, gestation_d &lt;int&gt;, weaning_d &lt;int&gt;,
+## #   birth_or_hatching_weight_g &lt;int&gt;, weaning_weight_g &lt;int&gt;, egg_mass_g &lt;int&gt;,
+## #   incubation_d &lt;int&gt;, fledging_age_d &lt;int&gt;, longevity_y &lt;int&gt;,
+## #   male_maturity_d &lt;int&gt;, inter_litter_or_interbirth_interval_y &lt;int&gt;,
+## #   female_body_mass_g &lt;int&gt;, male_body_mass_g &lt;int&gt;, …</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Make any necessary replacements in the data such that all NA’s
+appear as “NA”.</li>
+</ol>
+<pre class="r"><code>amniota_no_na &lt;- read_csv(&quot;data/amniota.csv&quot;, na=&quot;-999&quot;) </code></pre>
+<pre><code>## Warning: One or more parsing issues, call `problems()` on your data frame for details,
+## e.g.:
+##   dat &lt;- vroom(...)
+##   problems(dat)</code></pre>
+<pre><code>## Rows: 21322 Columns: 36
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (6): class, order, family, genus, species, common_name
+## dbl (28): female_maturity_d, litter_or_clutch_size_n, litters_or_clutches_pe...
+## lgl  (2): subspecies, female_body_mass_at_maturity_g
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>How many total NA’s are in the data set? Use the package
 <code>naniar</code> to produce a summary, including percentages, of
-missing data in each column for the <code>amniota</code> data.</p></li>
-<li><p>Double check your replacement using <code>summary</code>. Do you
-see any other potential issues? If so, fix them.</p></li>
-<li><p>Use <code>naniar</code> to visualize the number of NA’s in each
-variable. Which variables have the most NA’s?</p></li>
-<li><p>Calculate the number of NAs in the <code>egg_mass_g</code> column
+missing data in each column for the <code>amniota</code> data.</li>
+</ol>
+<pre class="r"><code>amniota_no_na %&gt;% 
+  miss_var_summary() %&gt;% 
+  summarize(total_na=sum(n_miss))</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   total_na
+##      &lt;int&gt;
+## 1   528200</code></pre>
+<pre class="r"><code>miss_var_summary(amniota_no_na)</code></pre>
+<pre><code>## # A tibble: 36 × 3
+##    variable                       n_miss pct_miss
+##    &lt;chr&gt;                           &lt;int&gt;    &lt;num&gt;
+##  1 subspecies                      21322    100  
+##  2 female_body_mass_at_maturity_g  21322    100  
+##  3 female_svl_at_maturity_cm       21120     99.1
+##  4 fledging_mass_g                 21111     99.0
+##  5 male_svl_cm                     21040     98.7
+##  6 no_sex_maturity_d               20860     97.8
+##  7 egg_width_mm                    20727     97.2
+##  8 egg_length_mm                   20702     97.1
+##  9 weaning_weight_g                20258     95.0
+## 10 female_svl_cm                   20242     94.9
+## # ℹ 26 more rows</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Double check your replacement using <code>summary</code>. Do you see
+any other potential issues? If so, fix them.</li>
+</ol>
+<pre class="r"><code>summary(amniota_no_na)</code></pre>
+<pre><code>##     class              order              family             genus          
+##  Length:21322       Length:21322       Length:21322       Length:21322      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##    species          subspecies     common_name        female_maturity_d 
+##  Length:21322       Mode:logical   Length:21322       Min.   :-30258.7  
+##  Class :character   NA&#39;s:21322     Class :character   1st Qu.:   288.4  
+##  Mode  :character                  Mode  :character   Median :   365.0  
+##                                                       Mean   :   691.2  
+##                                                       3rd Qu.:   819.3  
+##                                                       Max.   :  9131.2  
+##                                                       NA&#39;s   :17849     
+##  litter_or_clutch_size_n litters_or_clutches_per_y adult_body_mass_g  
+##  Min.   :  0.900         Min.   : 0.120            Min.   :        0  
+##  1st Qu.:  2.000         1st Qu.: 1.000            1st Qu.:       15  
+##  Median :  2.800         Median : 1.050            Median :       44  
+##  Mean   :  3.826         Mean   : 1.752            Mean   :    37493  
+##  3rd Qu.:  4.150         3rd Qu.: 2.000            3rd Qu.:      238  
+##  Max.   :156.000         Max.   :52.000            Max.   :149000000  
+##  NA&#39;s   :8244            NA&#39;s   :16374             NA&#39;s   :4645       
+##  maximum_longevity_y  gestation_d        weaning_d      
+##  Min.   :  0.0833    Min.   :   5.00   Min.   :   1.94  
+##  1st Qu.:  6.0000    1st Qu.:  29.91   1st Qu.:  27.75  
+##  Median : 12.3083    Median :  63.92   Median :  51.60  
+##  Mean   : 16.4657    Mean   : 105.28   Mean   : 113.05  
+##  3rd Qu.: 22.0000    3rd Qu.: 151.88   3rd Qu.: 129.83  
+##  Max.   :211.0000    Max.   :7396.92   Max.   :1826.25  
+##  NA&#39;s   :15822       NA&#39;s   :18926     NA&#39;s   :19279    
+##  birth_or_hatching_weight_g weaning_weight_g      egg_mass_g      
+##  Min.   :0.000e+00          Min.   :9.000e-01   Min.   :   0.218  
+##  1st Qu.:1.300e+00          1st Qu.:1.320e+01   1st Qu.:   2.100  
+##  Median :5.890e+00          Median :4.310e+01   Median :   5.100  
+##  Mean   :4.480e+03          Mean   :4.139e+04   Mean   :  22.252  
+##  3rd Qu.:4.385e+01          3rd Qu.:8.503e+02   3rd Qu.:  20.100  
+##  Max.   :2.250e+06          Max.   :1.700e+07   Max.   :1500.000  
+##  NA&#39;s   :17779              NA&#39;s   :20258       NA&#39;s   :15907     
+##   incubation_d     fledging_age_d   longevity_y       male_maturity_d  
+##  Min.   :   2.00   Min.   :  1.0   Min.   :  0.0833   Min.   :  30.44  
+##  1st Qu.:  17.00   1st Qu.: 16.5   1st Qu.:  5.5000   1st Qu.: 365.00  
+##  Median :  29.25   Median : 27.5   Median : 10.7000   Median : 365.25  
+##  Mean   :  46.67   Mean   : 36.8   Mean   : 13.5209   Mean   : 787.16  
+##  3rd Qu.:  59.50   3rd Qu.: 46.0   3rd Qu.: 18.2000   3rd Qu.: 913.00  
+##  Max.   :1762.00   Max.   :345.0   Max.   :177.0000   Max.   :9131.25  
+##  NA&#39;s   :17682     NA&#39;s   :19478   NA&#39;s   :15822      NA&#39;s   :19278    
+##  inter_litter_or_interbirth_interval_y female_body_mass_g  male_body_mass_g   
+##  Min.   :0.0465                        Min.   :      0.3   Min.   :      0.3  
+##  1st Qu.:0.3184                        1st Qu.:     14.0   1st Qu.:     16.5  
+##  Median :0.9993                        Median :     40.7   Median :     48.4  
+##  Mean   :0.9067                        Mean   :   2075.8   Mean   :   6196.8  
+##  3rd Qu.:1.0000                        3rd Qu.:    220.0   3rd Qu.:    245.5  
+##  Max.   :4.8467                        Max.   :3700000.0   Max.   :4545000.0  
+##  NA&#39;s   :19904                         NA&#39;s   :14113       NA&#39;s   :14679      
+##  no_sex_body_mass_g   egg_width_mm    egg_length_mm    fledging_mass_g  
+##  Min.   :        0   Min.   :  2.50   Min.   :  2.50   Min.   :   4.85  
+##  1st Qu.:       13   1st Qu.:  8.00   1st Qu.: 10.94   1st Qu.:  14.60  
+##  Median :       35   Median : 13.00   Median : 19.98   Median :  24.80  
+##  Mean   :    68952   Mean   : 22.99   Mean   : 36.40   Mean   : 452.27  
+##  3rd Qu.:      164   3rd Qu.: 35.90   3rd Qu.: 58.92   3rd Qu.: 107.00  
+##  Max.   :136000000   Max.   :125.00   Max.   :455.00   Max.   :9992.00  
+##  NA&#39;s   :11663       NA&#39;s   :20727    NA&#39;s   :20702    NA&#39;s   :21111    
+##   adult_svl_cm      male_svl_cm     female_svl_cm      birth_or_hatching_svl_cm
+##  Min.   :   1.79   Min.   :  1.57   Min.   :   1.800   Min.   :  0.400         
+##  1st Qu.:   9.50   1st Qu.: 21.41   1st Qu.:   5.756   1st Qu.:  2.450         
+##  Median :  18.50   Median : 35.85   Median :   8.150   Median :  3.300         
+##  Mean   :  38.20   Mean   : 50.44   Mean   :  20.609   Mean   : 12.099         
+##  3rd Qu.:  40.50   3rd Qu.: 63.39   3rd Qu.:  17.721   3rd Qu.:  5.256         
+##  Max.   :3049.00   Max.   :315.20   Max.   :1125.000   Max.   :759.999         
+##  NA&#39;s   :14274     NA&#39;s   :21040    NA&#39;s   :20242      NA&#39;s   :20085           
+##  female_svl_at_maturity_cm female_body_mass_at_maturity_g no_sex_svl_cm   
+##  Min.   :  2.85            Mode:logical                   Min.   :   1.7  
+##  1st Qu.:  4.90            NA&#39;s:21322                     1st Qu.:   5.7  
+##  Median :  6.00                                           Median :   7.7  
+##  Mean   : 18.69                                           Mean   :  20.0  
+##  3rd Qu.:  8.40                                           3rd Qu.:  11.0  
+##  Max.   :580.00                                           Max.   :3300.0  
+##  NA&#39;s   :21120                                            NA&#39;s   :16052   
+##  no_sex_maturity_d
+##  Min.   :   33.0  
+##  1st Qu.:  365.3  
+##  Median :  913.1  
+##  Mean   : 1604.5  
+##  3rd Qu.: 2008.9  
+##  Max.   :14610.0  
+##  NA&#39;s   :20860</code></pre>
+<pre class="r"><code>amniota_no_na %&gt;% 
+  replace_with_na_all(condition=~.x %in% c(common_na_numbers, common_na_numbers))</code></pre>
+<pre><code>## # A tibble: 21,322 × 36
+##    class order     family genus species subspecies common_name female_maturity_d
+##    &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;lgl&gt;      &lt;chr&gt;                   &lt;dbl&gt;
+##  1 Aves  Accipitr… Accip… Acci… albogu… NA         Pied Gosha…               NA 
+##  2 Aves  Accipitr… Accip… Acci… badius  NA         Shikra                   363.
+##  3 Aves  Accipitr… Accip… Acci… bicolor NA         Bicolored …               NA 
+##  4 Aves  Accipitr… Accip… Acci… brachy… NA         New Britai…               NA 
+##  5 Aves  Accipitr… Accip… Acci… brevip… NA         Levant Spa…              363.
+##  6 Aves  Accipitr… Accip… Acci… castan… NA         Chestnut-f…               NA 
+##  7 Aves  Accipitr… Accip… Acci… chilen… NA         Chilean Ha…               NA 
+##  8 Aves  Accipitr… Accip… Acci… chiono… NA         White-brea…              548.
+##  9 Aves  Accipitr… Accip… Acci… cirroc… NA         Collared S…               NA 
+## 10 Aves  Accipitr… Accip… Acci… cooper… NA         Cooper&#39;s H…              730 
+## # ℹ 21,312 more rows
+## # ℹ 28 more variables: litter_or_clutch_size_n &lt;dbl&gt;,
+## #   litters_or_clutches_per_y &lt;dbl&gt;, adult_body_mass_g &lt;dbl&gt;,
+## #   maximum_longevity_y &lt;dbl&gt;, gestation_d &lt;dbl&gt;, weaning_d &lt;dbl&gt;,
+## #   birth_or_hatching_weight_g &lt;dbl&gt;, weaning_weight_g &lt;dbl&gt;, egg_mass_g &lt;dbl&gt;,
+## #   incubation_d &lt;dbl&gt;, fledging_age_d &lt;dbl&gt;, longevity_y &lt;dbl&gt;,
+## #   male_maturity_d &lt;dbl&gt;, inter_litter_or_interbirth_interval_y &lt;dbl&gt;, …</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Use <code>naniar</code> to visualize the number of NA’s in each
+variable. Which variables have the most NA’s?</li>
+</ol>
+<pre class="r"><code>amniota_no_na %&gt;% 
+  miss_var_summary() %&gt;% 
+  arrange(desc(n_miss))</code></pre>
+<pre><code>## # A tibble: 36 × 3
+##    variable                       n_miss pct_miss
+##    &lt;chr&gt;                           &lt;int&gt;    &lt;num&gt;
+##  1 subspecies                      21322    100  
+##  2 female_body_mass_at_maturity_g  21322    100  
+##  3 female_svl_at_maturity_cm       21120     99.1
+##  4 fledging_mass_g                 21111     99.0
+##  5 male_svl_cm                     21040     98.7
+##  6 no_sex_maturity_d               20860     97.8
+##  7 egg_width_mm                    20727     97.2
+##  8 egg_length_mm                   20702     97.1
+##  9 weaning_weight_g                20258     95.0
+## 10 female_svl_cm                   20242     94.9
+## # ℹ 26 more rows</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Calculate the number of NAs in the <code>egg_mass_g</code> column
 sorted by taxonomic class; i.e. how many NA’s are present in the
 <code>egg_mass_g</code> column in birds, mammals, and reptiles? Does
 this results make sense biologically? How do these results affect your
-interpretation of NA’s?</p></li>
+interpretation of NA’s?</li>
 </ol>
+<pre class="r"><code>amniota_no_na %&gt;% 
+  select(class, egg_mass_g) %&gt;% 
+  group_by(class) %&gt;% 
+  miss_var_summary()</code></pre>
+<pre><code>## # A tibble: 3 × 4
+## # Groups:   class [3]
+##   class    variable   n_miss pct_miss
+##   &lt;chr&gt;    &lt;chr&gt;       &lt;int&gt;    &lt;num&gt;
+## 1 Aves     egg_mass_g   4914     50.1
+## 2 Mammalia egg_mass_g   4953    100  
+## 3 Reptilia egg_mass_g   6040     92.0</code></pre>
+<p>Yes, this results make sense biologically; because mammals do not lay
+eggs, they don’t have values in the egg mass. NA’s in mammals literally
+represent 0.</p>
 </div>
 <div id="knit-and-upload" class="section level2">
 <h2>Knit and Upload</h2>

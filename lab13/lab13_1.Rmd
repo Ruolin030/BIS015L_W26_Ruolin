@@ -54,13 +54,13 @@ summary(life_history)
 This will give you a quick summary of the number of NA's in each variable. Notice that, at least for now, it doesn't look like there are NA's in most variables because they are still represented by -999.
 ```{r}
 life_history %>% 
-  summarize(across(everything(), ~ sum(is.na(.)))) #looking for NA
+  summarize(across(everything(), ~ sum(is.na(.)))) #looking for NA ###
 ```
 
 Here we look for all of the -999's.
 ```{r}
 life_history %>% 
-  summarize(across(everything(), ~ sum(.==-999))) 
+  summarize(across(everything(), ~ sum(.==-999))) ###
 ```
 
 ## Dealing with NA's using `read_csv()`
@@ -130,7 +130,7 @@ We can also use `miss_var_summary` with `group_by()`. This helps us better evalu
 ```{r}
 life_history_no_nas %>% 
   group_by(order) %>% 
-  miss_var_summary(order=T)
+  miss_var_summary(order=T) ###
 ```
 
 `naniar` has nice replace functions which will allow you to precisely control which values you want replaced with NA's in each variable. This is a nice alternative to `mutate()` and `na_if()`.  
@@ -143,14 +143,14 @@ life_history %>% #going back to the original data
                                  max_life= 0, 
                                  litter_size= -999, 
                                  gestation= -999, 
-                                 mass= -999)) %>% 
+                                 mass= -999)) %>% ###
 miss_var_summary()
 ```
 
 You can also use naniar to replace a specific value (like -999) with NA across the entire data set.  
 ```{r}
 life_history %>% 
-  replace_with_na_all(condition = ~.x ==-999) %>% 
+  replace_with_na_all(condition = ~.x ==-999) %>% ### difference?
   miss_var_summary()
 ```
 
@@ -160,12 +160,12 @@ common_na_strings
 ```
 
 ```{r}
-common_na_numbers
+common_na_numbers ### what if the data contains the 66 or 77
 ```
 
 ```{r}
 life_history %>% 
-  replace_with_na_all(condition = ~.x %in% c(common_na_numbers, common_na_strings)) %>% 
+  replace_with_na_all(condition = ~.x %in% c(common_na_numbers, common_na_strings)) %>% ###
   mutate(newborn=na_if(newborn, "not measured"))
 ```
 
@@ -193,8 +193,8 @@ miss_var_summary(cites)
 3. Try using `group_by()` with `naniar`. Look specifically at `class` and `exporter_reported_quantity`. For which taxonomic classes do we have the highest number of missing export data?
 ```{r}
 cites %>% 
-  select(class, exporter_reported_quantity) %>% 
   group_by(class) %>% 
+  select(class, exporter_reported_quantity) %>% ###
   miss_var_summary() %>% 
   arrange(desc(n_miss))
 ```

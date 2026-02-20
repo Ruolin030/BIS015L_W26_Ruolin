@@ -45,7 +45,7 @@ The general syntax for joins is...
 `inner_join`  
 Where did customers 3 and 4 go? Since they are not on both tables, they were dropped. So, `inner_join` only keeps the rows that have matching values in both tables; it is very strict about matching.
 ```{r}
-inner_join(table_A, table_B, by="customer_ID")
+inner_join(table_A, table_B, by="customer_ID") 
 ```
 
 `left_join`
@@ -69,7 +69,7 @@ full_join(table_A, table_B, by="customer_ID")
 `anti_join`
 Provides the rows in the first table for which there are not matching values in the second table.
 ```{r}
-anti_join(table_A, table_B, by="customer_ID") #use to troubleshoot problematic joins
+anti_join(table_A, table_B, by="customer_ID") #use to troubleshoot problematic joins ### what if tables are the same? 
 ```
 
 ## Dates
@@ -84,7 +84,7 @@ now()
 
 There are many different options for working with dates and date-times in lubridate including `ymd`, `mdy`, `dmy`, `mdy_hms`, `ymd_hms`. The formats below are common examples of how you might see dates in your data.
 ```{r}
-dateformat1 <- "20200922"
+dateformat1 <- "20200922" ###
 dateformat2 <- "09-22-2020"
 dateformat3 <- "22/09/2020"
 dateformat4 <- "09-22-2020 17:00:00"
@@ -153,6 +153,10 @@ spider_records_locations <- spider_records_locations %>%
 4. Save your final data to a `.csv`.
 ```{r}
 write.csv(spider_records_locations, file="spider_records_locations.csv")
+```
+
+```{r}
+getwd()
 ```
 
 ## That's it, let's take a break!   
