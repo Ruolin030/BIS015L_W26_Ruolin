@@ -45,12 +45,12 @@ sharks %>%
 ```{r}
 lat <- c(32.59, 41.56)
 long <- c(-124.7, -117.1)
-bbox <- make_bbox(long, lat, f=0.03)
+bbox <- make_bbox(long, lat, f=0.05)
 ```
 
 2. Load a map from `stamen` in a terrain style projection and display the map.  
 ```{r}
-map_sharks <- get_stadiamap(maptype = "stamen_terrain", zoom=10)
+map_sharks <- get_stadiamap(bbox, maptype = "stamen_terrain", zoom=8)
 ```
 
 ```{r}
@@ -60,22 +60,45 @@ ggmap(map_sharks)
 3. Build a map that overlays the recorded observations of shark attacks in California.  
 ```{r}
 ggmap(map_sharks)+
-  geom_point(data=sharks, aes(longitude, latitude, color=incident_num), color="black", alpha=0.8, size=4, na.rm=T)+
+  geom_point(data=sharks, aes(longitude, latitude), color="black", alpha=0.8, size=0.7)+
   labs(x="Longitude", y="Latitude", title="Shark Attacks in CA")
 ```
 
-```{r}
-
-```
 
 4. Build a map that only shows the fatalities.  
 ```{r}
+sharks_fatal <-sharks  %>% 
+  filter(injury=="fatal")
+```
 
+```{r}
+sharks_fatal %>% 
+  select(latitude, longitude) %>% 
+  summary()
+```
+```{r}
+lat2 <- c(32.85, 39.58)
+long2 <- c(-123.8, -117.3)
+bbox2 <- make_bbox(long, lat, f=0.03)
+```
+
+```{r}
+map_sharks_fatal <- get_stadiamap(bbox2, maptype = "stamen_terrain", zoom=8)
+```
+
+```{r}
+ggmap(map_sharks_fatal)
+```
+
+```{r}
+ggmap(map_sharks_fatal)+
+  geom_point(data=sharks_fatal, aes(longitude, latitude), color="black", alpha=0.8, size=1, na.rm=T)+
+  labs(x="Longitude", y="Latitude", title="Fatalities in CA")
 ```
 
 5. Build the same map (fatalities only), but this time make it interactive using `leaflet`. Also, color the points red.  
 ```{r}
-sharks %>% 
+sharks_fatal %>% 
   summarize(min_lon=min(longitude, na.rm=T),
             max_lon=max(longitude, na.rm=T),
             min_lat=min(latitude, na.rm=T),
@@ -83,14 +106,14 @@ sharks %>%
 ```
 
 ```{r}
-min_lon2 <- -124.7267	
-max_lon2 <- -117.1467	
-min_lat2 <- 32.58833	
-max_lat2 <- 41.56167	
+min_lon2 <- -123.7783	
+max_lon2 <- -117.28		
+min_lat2 <- 32.855		
+max_lat2 <- 39.57833		
 ```
 
 ```{r}
-leaflet(sharks) %>% 
+leaflet(sharks_fatal) %>% 
   addProviderTiles(providers$Stadia.StamenTerrain) %>% 
   addCircleMarkers(
     lng = ~longitude,
@@ -114,7 +137,35 @@ sharks %>%
 ```
 
 ```{r}
+sharks_san_d <- sharks %>% 
+  filter(county=="San Diego")
+sharks_san_d
+```
 
+```{r}
+sharks_san_d %>% 
+  select(latitude, longitude) %>% 
+  summary()
+```
+
+```{r}
+lat3 <- c(32.59, 33.37)
+long3 <- c(-118.1, -117.1)
+bbox3 <- make_bbox(long3, lat3, f=1)
+```
+
+```{r}
+map_sharks_san_d <- get_stadiamap(bbox3, maptype = "stamen_terrain", zoom=9)
+```
+
+```{r}
+ggmap(map_sharks_san_d)
+```
+
+```{r}
+ggmap(map_sharks_san_d)+
+  geom_point(data=sharks_san_d, aes(longitude, latitude), color="black", alpha=0.8, size=1, na.rm=T)+
+  labs(x="Longitude", y="Latitude", title="Shark Attacks in San Diego")
 ```
 
 ## Knit and Upload

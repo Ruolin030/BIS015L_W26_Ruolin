@@ -278,12 +278,12 @@ library(shiny)
 
 ui <- fluidPage(
   selectInput("x",
-              "Select Fill Variale",
+              "Select Fill Variable",
               choices = c("trophic_guild",
                           "thermoregulation"),
               selected = "trophic_guild"),
   selectInput("y",
-              "Select Fill Variale",
+              "Select Fill Variable",
               choices = c("trophic_guild",
                           "thermoregulation"),
               selected = "trophic_guild"),
