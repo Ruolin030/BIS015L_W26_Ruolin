@@ -1,6 +1,6 @@
 ---
 title: "Lab 14 Homework"
-author: "Please Add Your Name Here"
+author: "Ruolin Huang"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -23,7 +23,7 @@ library(leaflet)
 
 ## API Key
 ```{r}
-register_stadiamaps("YOUR API KEY HERE", write = FALSE)
+register_stadiamaps("98fb3221-376e-43ba-9338-70c989f39bef", write = FALSE)
 ```
 
 ## Load the Data
@@ -36,16 +36,86 @@ sharks <- read_csv("data/SharkIncidents_1950_2022_220302.csv") %>%
 ```
 
 1. Use the range of the latitude and longitude to build an appropriate bounding box for your map.
+```{r}
+sharks %>% 
+  select(latitude, longitude) %>% 
+  summary()
+```
+
+```{r}
+lat <- c(32.59, 41.56)
+long <- c(-124.7, -117.1)
+bbox <- make_bbox(long, lat, f=0.03)
+```
 
 2. Load a map from `stamen` in a terrain style projection and display the map.  
+```{r}
+map_sharks <- get_stadiamap(maptype = "stamen_terrain", zoom=10)
+```
+
+```{r}
+ggmap(map_sharks)
+```
 
 3. Build a map that overlays the recorded observations of shark attacks in California.  
+```{r}
+ggmap(map_sharks)+
+  geom_point(data=sharks, aes(longitude, latitude, color=incident_num), color="black", alpha=0.8, size=4, na.rm=T)+
+  labs(x="Longitude", y="Latitude", title="Shark Attacks in CA")
+```
+
+```{r}
+
+```
 
 4. Build a map that only shows the fatalities.  
+```{r}
+
+```
 
 5. Build the same map (fatalities only), but this time make it interactive using `leaflet`. Also, color the points red.  
+```{r}
+sharks %>% 
+  summarize(min_lon=min(longitude, na.rm=T),
+            max_lon=max(longitude, na.rm=T),
+            min_lat=min(latitude, na.rm=T),
+            max_lat=max(latitude, na.rm=T))
+```
+
+```{r}
+min_lon2 <- -124.7267	
+max_lon2 <- -117.1467	
+min_lat2 <- 32.58833	
+max_lat2 <- 41.56167	
+```
+
+```{r}
+leaflet(sharks) %>% 
+  addProviderTiles(providers$Stadia.StamenTerrain) %>% 
+  addCircleMarkers(
+    lng = ~longitude,
+    lat = ~latitude,
+    radius = 2,
+    color = "red",
+    stroke = FALSE,
+    fillOpacity = 0.7
+  ) %>% 
+  addScaleBar(position = "bottomleft") %>% 
+  fitBounds(lng1=min_lon2, lat1=min_lat2,
+            lng2=max_lon2, lat2=max_lat2)
+```
 
 6. Which county has the highest number of recorded shark attacks? Make a map that only shows the attacks in this county. (hint: it may help improve the map if you remove duplicate locations, i.e. multiple attacks at the same location.)
+```{r}
+sharks %>% 
+  group_by(county) %>% 
+  summarize(n_shark_attacks=n()) %>% 
+  arrange(desc(n_shark_attacks))
+```
+
+```{r}
+
+```
 
 ## Knit and Upload
 Please knit your work as an .html file and upload to Canvas. Homework is due before the start of the next lab. No late work is accepted. Make sure to use the formatting conventions of RMarkdown to make your report neat and clean! 

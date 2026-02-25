@@ -293,9 +293,14 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  reactive({})
   
-  
+  output$plot <- renderPlot({
+    
+    ggplot(data=homerange,
+           aes_string(x="locomotion", fill=input$x))+
+      geom_bar(position="dodge", alpha=0.8, color="black")+
+      labs(x=NULL, y=NULL, fill="Fill Variable")
+  })
 }
 
 shinyApp(ui, server)

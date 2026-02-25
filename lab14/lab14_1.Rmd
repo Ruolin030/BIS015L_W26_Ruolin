@@ -96,7 +96,7 @@ ggmap(map1)
 To add our points we only need to specify the x and y location similar to how we made plots in `ggplot.` 
 ```{r}
 ggmap(map1)+
-  geom_point(data=spiders, aes(longitude, latitude), size=0.75, color="black", alpha=0.8)+. #size: size of the point
+  geom_point(data=spiders, aes(longitude, latitude), size=0.75, color="black", alpha=0.8)+ #size: size of the point
   labs(x="Longitude", y="Latitude", title="CA Usofila Records")
 ```
 
@@ -165,6 +165,7 @@ grizzly <- read_csv("data/bear-sightings.csv") %>%
 ```{r}
 summary(grizzly)
 ```
+
 ```{r}
 long <- c(-166.2, -131.3 )
 lat <- c(55.02, 70.37)
