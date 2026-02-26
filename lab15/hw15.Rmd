@@ -1,6 +1,6 @@
 ---
 title: "Homework 15"
-author: "Your Name Here"
+author: "Ruolin Huang"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -30,10 +30,49 @@ elephants <- read_csv("data/elephants_data/elephants.csv") %>%
 
 1. There are only three variables in the data. Two are continuous (age, height) and one is categorical (sex). Build an app that compares the range of age and height by sex. Users should be able to select either age or height. Make the app neat, clean, and professional. Use `shinydashboard` to improve the aesthetics of your app.
 ```{r, eval=F, echo=T}
+library(shiny)
 
+ui <- dashboardPage(
+  
+  dashboardHeader(title="The Range of Age and Height by Sex"),
+  
+  dashboardSidebar(
+  
+  selectInput("y",
+              "Select Variable",
+              choices = c("age",
+                          "height"),
+              selected = "age")
+  ),
+  
+  dashboardBody(
+  
+  plotOutput("plot", width = "500px", height = "400px")
+  
+),
+
+)
+
+server <- function(input, output, session) {
+  
+  output$plot <- renderPlot({
+    
+    elephants %>% 
+      ggplot(aes(x=sex, 
+                 y=.data[[input$y]],
+                 fill=sex))+
+      geom_boxplot(alpha=0.8, color="black")+
+      theme_light()
+      
+  })
+  
+}
+
+shinyApp(ui, server)
 ```
 
 2. In addition to the .Rmd file, save your app as a standalone R script called `elephants.csv`.
+
 
 ## Knit and Upload
 Please knit your work as an .html file and upload to Canvas. Homework is due before the start of the next lab. No late work is accepted. Make sure to use the formatting conventions of RMarkdown to make your report neat and clean!

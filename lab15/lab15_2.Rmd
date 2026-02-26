@@ -263,7 +263,7 @@ ui <- dashboardPage(
   selectInput("y",
               "Select Pop",
               choices = sort(unique(wolves$pop)),
-              selected = "BC")
+              selected = "AK.PEN")
   ),
   
   dashboardBody(
@@ -272,14 +272,18 @@ ui <- dashboardPage(
   
 )
 
+)
 server <- function(input, output, session) {
   
-  outplot <- renderPlot({
+  output$plot <- renderPlot({
     
     wolves %>% 
-      filter() %>% 
+      filter(sex!="NA") %>% 
+      filter(input$y==.data[["pop"]]) %>% 
       ggplot(aes(x=sex, fill=sex))+
-      geom_bar()
+      geom_bar(alpha=0.8, color="black")+
+      labs(x="sex", y=NULL)+
+      theme_minimal()
   })
   
 }
