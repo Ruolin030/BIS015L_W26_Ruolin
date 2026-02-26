@@ -113,7 +113,7 @@ min_lat2 <- 32.855
 max_lat2 <- 39.57833		
 ```
 
-```{r}
+```{r, eval=FALSE, echo=TRUE}
 leaflet(sharks_fatal) %>% 
   addProviderTiles(providers$Stadia.StamenTerrain) %>% 
   addCircleMarkers(
