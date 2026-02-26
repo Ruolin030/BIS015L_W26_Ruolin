@@ -50,7 +50,7 @@ bbox <- make_bbox(long, lat, f=0.05)
 
 2. Load a map from `stamen` in a terrain style projection and display the map.  
 ```{r}
-map_sharks <- get_stadiamap(bbox, maptype = "stamen_terrain", zoom=8)
+map_sharks <- get_stadiamap(bbox, maptype = "stamen_terrain", zoom=6)
 ```
 
 ```{r}
@@ -76,14 +76,15 @@ sharks_fatal %>%
   select(latitude, longitude) %>% 
   summary()
 ```
+
 ```{r}
 lat2 <- c(32.85, 39.58)
 long2 <- c(-123.8, -117.3)
-bbox2 <- make_bbox(long, lat, f=0.03)
+bbox2 <- make_bbox(long2, lat2, f=0.03)
 ```
 
 ```{r}
-map_sharks_fatal <- get_stadiamap(bbox2, maptype = "stamen_terrain", zoom=8)
+map_sharks_fatal <- get_stadiamap(bbox2, maptype = "stamen_terrain", zoom=6)
 ```
 
 ```{r}
@@ -138,8 +139,8 @@ sharks %>%
 
 ```{r}
 sharks_san_d <- sharks %>% 
-  filter(county=="San Diego")
-sharks_san_d
+  filter(county=="San Diego") %>% 
+  distinct(longitude, latitude, .keep_all = TRUE)
 ```
 
 ```{r}
@@ -151,7 +152,7 @@ sharks_san_d %>%
 ```{r}
 lat3 <- c(32.59, 33.37)
 long3 <- c(-118.1, -117.1)
-bbox3 <- make_bbox(long3, lat3, f=1)
+bbox3 <- make_bbox(long3, lat3, f=0.4)
 ```
 
 ```{r}
