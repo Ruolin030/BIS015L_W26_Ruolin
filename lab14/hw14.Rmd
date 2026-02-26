@@ -140,7 +140,7 @@ sharks %>%
 ```{r}
 sharks_san_d <- sharks %>% 
   filter(county=="San Diego") %>% 
-  distinct(longitude, latitude, .keep_all = TRUE)
+  distinct(location, .keep_all = TRUE)
 ```
 
 ```{r}

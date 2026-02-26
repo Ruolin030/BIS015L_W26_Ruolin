@@ -100,6 +100,7 @@ ggmap(map1)+
   labs(x="Longitude", y="Latitude", title="CA Usofila Records")
 ```
 
+
 ## Leaflet
 If we want to make an interactive map, we can use the `leaflet` package. This allows us to zoom and pan around the map, and we can add popups with information about each point.  
 
