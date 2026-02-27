@@ -290,5 +290,4 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
-
 -->[Home](https://jmledford3115.github.io/datascibiol/)
