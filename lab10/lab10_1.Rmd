@@ -71,7 +71,7 @@ life_history %>%
 life_history %>% 
   group_by(order) %>% 
   summarize(mean_mass=mean(mass, na.rm=T)) %>% 
-  arrange(desc(mean_mass)) %>% ??
+  arrange(desc(mean_mass)) %>%
   ggplot(mapping=aes(x=order, y=mean_mass))+
   geom_col()+
   coord_flip()

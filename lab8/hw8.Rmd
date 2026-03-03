@@ -35,6 +35,7 @@ names(fisheries_clean)
 ```{r}
 glimpse(fisheries_clean)
 ```
+
 ```{r}
 summary(fisheries_clean)
 ```
