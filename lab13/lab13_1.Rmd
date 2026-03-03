@@ -193,7 +193,7 @@ miss_var_summary(cites)
 3. Try using `group_by()` with `naniar`. Look specifically at `class` and `exporter_reported_quantity`. For which taxonomic classes do we have the highest number of missing export data?
 ```{r}
 cites %>% 
-  group_by(class) %>% 
+  group_by(class) %>%
   select(class, exporter_reported_quantity) %>% ###
   miss_var_summary() %>% 
   arrange(desc(n_miss))

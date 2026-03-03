@@ -101,6 +101,7 @@ msleep %>%
   summarise_all(mean, na.rm=T)
 ```
 
+
 This is a little more efficient.
 ```{r}
 msleep %>% 
