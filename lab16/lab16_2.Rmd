@@ -76,7 +76,7 @@ There are five main types of BLAST, each designed for a specific combination of 
 
 2. Click the appropriate Nucleotide Blast (blastn)
 
-3. Select the folder that contains our query sequence, **unknown_genome_02.txt** or paste the sequence in the **Enter Query Sequence** text box. 
+3. Select the folder that contains our query sequence, **unknown_genome_01.txt** or paste the sequence in the **Enter Query Sequence** text box. 
 
 4. Under **"Database"**, make sure it is set for **core nucleotide database(core_nt)**. Optimize for "Highly similar sequences (megablast)".Under "Algorithm parameters", set the "Max target sequences" to 50.
 
@@ -99,7 +99,7 @@ There are five main types of BLAST, each designed for a specific combination of 
    
 Load the blast search results into R. 
 ```{r}
-
+#read_csv("data/blast_results/")
 ```
 
 ```{r}
@@ -114,7 +114,10 @@ What was the top 5 hits for your blast search ?
 
 Which hit had the highest e-value?**(include the description, taxid, e_value, and link to the accession number for this hit)**
 ```{r}
-
+#genome01_blastn %>% 
+#select(description, e_value, accession) %>% 
+#arrange(desc(e_value)) %>% 
+#slice_max(n=1)
 ```
 
 ### View Fasta Files in R
@@ -124,7 +127,7 @@ Which hit had the highest e-value?**(include the description, taxid, e_value, an
 if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 
-#BiocManager::install("Biostrings")
+BiocManager::install("Biostrings")
 ```
 
 
@@ -135,12 +138,12 @@ library(Biostrings)
 
 Lets take a look at a dna fasta file
 ```{r}
-
+#dna_file <- readDNAStringSet("data/e.coli_genbank.fasta")
 ```
 
 Lets look at the head of the fasta file
 ```{r}
-
+#head(dna_file)
 ```
 
 Lets take a look at a amino acid fasta file
