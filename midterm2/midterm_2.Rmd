@@ -96,23 +96,24 @@ polar_bears %>%
 ```{r}
 polar_bears %>% 
   ggplot(aes(x=popn, fill=sex))+
-  geom_bar(position = "dodge")
+  geom_bar(position = "dodge")+
+  labs(title = "Number of Males and Females by population", x="population", y="number of males and females")
 ```
 
 4. (6 points) How many bears were sampled in each year for both populations? Make a line plot(s) to visualize sampling by year for both populations. (hint: you will need to pull apart the date to get the year in its own column)
 ```{r}
 polar_bears <- polar_bears %>% 
   separate(capture_date, into = c("year", "month", "day")) %>% 
-  mutate(year=factor(year))
+  mutate(year=as.numeric(year))
 ```
 
 ```{r}
-#olar_bears %>%
-  #group_by(year) %>% 
-  #summarize(count=n()) %>% 
-  #ggplot(aes(x=year, y=count))+
-  #geom_col()+
-  #coord_flip()
+polar_bears %>% 
+  group_by(year) %>% 
+  summarize(number=n()) %>% 
+  ggplot(aes(x=year, y=number))+
+  geom_line()
+  
 ```
 
 5. (2 points) What are the min, median, mean, and max values for `urea_nitrogen` and `creatinine`?
