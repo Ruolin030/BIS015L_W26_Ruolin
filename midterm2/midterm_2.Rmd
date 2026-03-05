@@ -82,10 +82,10 @@ glimpse(polar_bears)
 
 2. (3 points) How are NA's represented and where are they distributed in the variables? Use the `naniar` package to visualize the distribution of NA's in the data and replace any alternative representations of NA with actual NA values.
 ```{r}
-polar_bears %>% 
-  mutate(mating=na_if(mating, "unknown"))
+polar_bears <- polar_bears %>% 
+  replace_with_na(replace = list(mating="unknown",
+                                 denning="unknown"))
 ```
-
 
 ```{r}
 polar_bears %>% 
