@@ -71,19 +71,19 @@ names(goi_01_blastx)
 ```
  
 ```{r}
-goi_01_blastx %>% 
+goi_01_blastx_top_10 <- goi_01_blastx %>% 
   select(scientific_name, cluster_ancestor, representative_sequence, max_score, query_cover, e_value, per_ident) %>% 
-  arrange(desc(e_value))
+  slice_min(e_value, n=10)
+goi_01_blastx_top_10
 ```
 
 **4. create a plot that shows the different in percent identity for each Scientific Name of the top 10 blastx hits. Make sure to label your axes and give your plot a title.**
 ```{r}
-goi_01_blastx %>% 
+goi_01_blastx_top_10 %>%
   ggplot(aes(x=scientific_name, y=per_ident))+
-  geom_point(na.rm=T)+
+  geom_col(na.rm=T, color="grey", alpha=0.8, fill="pink")+
   coord_flip()+
   labs(title="Different in Percent Indentity for Scientific Name", x="Scientific Name", y="Percent Identity")
-  
 ```
 
 
@@ -110,12 +110,12 @@ goi_01_blastn %>%
 
 **7. Based on the blastx and blastn results, what do you think this gene is and what bacteria do you think it came from?**
 ```{}
-
+I think this gene is Enterobacterales, and it came from Yersinia pestis.
 ```
 
 **8. For the top blastn hit, click on the accession link for this bacteria and download the coding sequences as a FASTA Protein file. Read the fasta file into R using the Biostrings package and store it in an object called `goi_blastn_hit`.**
 ```{r}
-goi_blastn_hit <- readDNAStringSet("data/goi_01.fasta")
+goi_blastn_hit <- readDNAStringSet("fasta_protein")
 ```
 
 ```{r}
