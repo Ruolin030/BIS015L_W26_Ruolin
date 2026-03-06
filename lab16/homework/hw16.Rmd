@@ -47,7 +47,7 @@ You will use BLAST, a tool used in real clinical and research microbiology labs,
 
 **1. Read the "gene of interest" sequence from the `goi_01.txt` file into R using the Biostrings package. Store this in an object called `query_seq`.What type sequence is this? (DNA, RNA or Protien) **
 ```{r}
-read
+
 ```
 
 ```{r}
@@ -57,37 +57,55 @@ read
 
 **2.Perform a blastx search using `goi_01.txt` as the query and the "nr_cluster_seq" database. Download the cluter table results in CSV format, change the name to "goi_01_blastx.csv" in the homework folder. Read the csv file into R and clean the column names. Save the cleaned data frame as goi_01_blastx.**
 ```{r}
-
+goi_01_blastx <- read_csv("goi_01_blastx.csv")
 ```
 
 ```{r}
-
+goi_01_blastx <- goi_01_blastx %>% 
+  clean_names()
 ```
 
 **3.Display the top 10 blastx hits, based on e_value, for this blastx search? (Include the Scientific Name, Cluster Anscestor, Cluster Representative Sequence, Max Score, Query Cover, E value and Percent Identity)**
 ```{r}
-
+names(goi_01_blastx) 
 ```
  
+```{r}
+goi_01_blastx %>% 
+  select(scientific_name, cluster_ancestor, representative_sequence, max_score, query_cover, e_value, per_ident) %>% 
+  arrange(desc(e_value))
+```
 
 **4. create a plot that shows the different in percent identity for each Scientific Name of the top 10 blastx hits. Make sure to label your axes and give your plot a title.**
 ```{r}
-
+goi_01_blastx %>% 
+  ggplot(aes(x=scientific_name, y=per_ident))+
+  geom_point(na.rm=T)+
+  coord_flip()+
+  labs(title="Different in Percent Indentity for Scientific Name", x="Scientific Name", y="Percent Identity")
+  
 ```
 
 
 **5 Perform a blastn search using `goi_01.txt` as the query and the "core_nt" database. Download the alignment description in CSV format, change the name to "goi_01_blastn.csv" in the homework folder. Read the csv file into R and clean the column names. Save the cleaned data frame as goi_01_blastn.**
 ```{r}
-
+goi_01_blastn <- read_csv("goi_01_blastn.csv")
 ```
 
 ```{r}
-
+goi_01_blastn <- goi_01_blastn %>% 
+  clean_names()
 ```
 
 **6. What was the top blastn hit, based on e_value, for this blastn search? (Include the Cluster Ancestor, Cluster Representative Sequence, Max Score, Query Cover, E value, Percent Identity and Accession Link)**
 ```{r}
+names(goi_01_blastn)
+```
 
+```{r}
+goi_01_blastn %>% 
+  select(description, scientific_name, max_score, query_cover, e_value, per_ident, accession) %>% 
+  slice_min(e_value, n=1)
 ```
 
 **7. Based on the blastx and blastn results, what do you think this gene is and what bacteria do you think it came from?**
@@ -97,7 +115,7 @@ read
 
 **8. For the top blastn hit, click on the accession link for this bacteria and download the coding sequences as a FASTA Protein file. Read the fasta file into R using the Biostrings package and store it in an object called `goi_blastn_hit`.**
 ```{r}
-
+goi_blastn_hit <- readDNAStringSet("data/goi_01.fasta")
 ```
 
 ```{r}
@@ -106,7 +124,7 @@ read
 
 **9. From the same organism, identify 5 other annotated genes? Do these genes suggest about the biology or virulence of this bacterium?** *Annotated genes can be found in the "CDS" section of the GenBank file. You can also find genes by going to summary page for the organism and looking at the "View annotated genes" section.*
 ```{r}
-
+readDNAStringSet("data/e.coli_genbank.fasta")
 ```
 
 
