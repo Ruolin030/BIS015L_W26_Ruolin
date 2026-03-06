@@ -109,10 +109,11 @@ polar_bears <- polar_bears %>%
 
 ```{r}
 polar_bears %>% 
-  group_by(year) %>% 
+  group_by(year, popn) %>% 
   summarize(number=n()) %>% 
-  ggplot(aes(x=year, y=number))+
-  geom_line()
+  ggplot(aes(x=year, y=number, color=popn))+ 
+  geom_line()+
+  geom_point()
   
 ```
 
@@ -145,12 +146,13 @@ polar_bears <- polar_bears %>%
 
 8. (6 points) The authors found that the number of fasting bears increased in the SB population but decreased in the CS population. Make a plot(s) that shows the number of fasting bears by year for both populations to visualize this trend.
 ```{r}
-#polar_bears %>% 
- # filter(fasting=="yes") %>%
-  #group_by(year) %>% 
-  #summarize(number=n()) %>% 
-  #ggplot(aes(x=number, color=popn))+
-  #geom_density()
+polar_bears %>% 
+  filter(fasting=="yes") %>%
+  group_by(year, popn) %>% 
+  summarize(number=n()) %>% 
+  ggplot(aes(x=year, y=number, color=popn))+
+  geom_line()+
+  geom_point()
 ```
 
 9. (8 points) Where are the polar bears used in this study located? Make a static (not leaflet) distribution map that shows the locations of  bears by population. (hint: use `color=popn` in the `aes()` of `geom_point()`)
