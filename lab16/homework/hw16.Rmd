@@ -118,15 +118,10 @@ I think this gene is Enterobacterales, and it came from Yersinia pestis.
 goi_blastn_hit <- readDNAStringSet("fasta_protein")
 ```
 
-```{r}
-
-```
-
 **9. From the same organism, identify 5 other annotated genes? Do these genes suggest about the biology or virulence of this bacterium?** *Annotated genes can be found in the "CDS" section of the GenBank file. You can also find genes by going to summary page for the organism and looking at the "View annotated genes" section.*
 ```{r}
-readDNAStringSet("data/e.coli_genbank.fasta")
-```
 
+```
 
 **10. Now that you have an idea of this bacteria's identity, what illness/disease do you think the patient has? What is the historical or public health significance of this disease? Based on the gene you identified, what role might this gene play in pathogenicity?**
 ```{}

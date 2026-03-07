@@ -96,7 +96,7 @@ polar_bears %>%
 ```{r}
 polar_bears %>% 
   ggplot(aes(x=popn, fill=sex))+
-  geom_bar(position = "dodge")+
+  geom_bar(position = "dodge", alpha=0.8)+
   labs(title = "Number of Males and Females by population", x="population", y="number of males and females")
 ```
 
@@ -111,9 +111,12 @@ polar_bears <- polar_bears %>%
 polar_bears %>% 
   group_by(year, popn) %>% 
   summarize(number=n()) %>% 
-  ggplot(aes(x=year, y=number, color=popn))+ 
+  ggplot(aes(x=year, y=number, color=popn))+
   geom_line()+
-  geom_point()
+  geom_point()+
+  scale_x_continuous(breaks=1983:2016, minor_breaks = NULL)+
+  labs(title="Number of Bears Sampled by Year", x="Year", y="Number of Bears", color="Population")+
+  theme(axis.text.x = element_text(angle=60, hjust=1))
   
 ```
 
@@ -152,13 +155,16 @@ polar_bears %>%
   summarize(number=n()) %>% 
   ggplot(aes(x=year, y=number, color=popn))+
   geom_line()+
-  geom_point()
+  geom_point()+
+  scale_x_continuous(breaks=1983:2016, minor_breaks = NULL)+
+  labs(title="Number of Fasting Bears Sampled by Year", x="Year", y="Number of Bears", color="Population")+
+  theme(axis.text.x = element_text(angle=60, hjust=1))
 ```
 
 9. (8 points) Where are the polar bears used in this study located? Make a static (not leaflet) distribution map that shows the locations of  bears by population. (hint: use `color=popn` in the `aes()` of `geom_point()`)
 ```{r}
 polar_bears %>% 
-  select(lat, long) %>% 
+  select(lat, long) %>%
   summary()
 ```
 
@@ -169,16 +175,17 @@ bbox <- make_bbox(long, lat, f=0.05)
 ```
 
 ```{r}
-map1 <- get_stadiamap(bbox, maptype = "stamen_terrain", zoom=5) 
+map_bears <- get_stadiamap(bbox, maptype = "stamen_terrain", zoom=5) 
 ```
 
 ```{r}
-ggmap(map1)
+ggmap(map_bears)
 ```
 
 ```{r}
-ggmap(map1)+
-  geom_point(data=polar_bears, mapping=aes(lat, long, color=popn), size=0.75)
+ggmap(map_bears)+
+  geom_point(data=polar_bears, mapping=aes(x=long, y=lat, color=popn), size=0.75, na.rm=T)+
+  labs(x="latitude", y="Longitude", title="Locations of Polar Bears by Population", color="Population")
 ```
 
 10. (10 points) Build a simple shiny app that shows the range of `un_creat_ratio` values for both populations. The user should be able to select the fill variable and choose between sex, mating, age_class, denning, and fasting. Please use the code chunk below so that your exam knits.
@@ -187,7 +194,7 @@ library(shiny)
 
 ui <- fluidPage(
   
-  selectInput("y",
+  selectInput("x",
               "Select Fill Variable",
               choices = c("sex",
                           "mating",
@@ -205,9 +212,11 @@ server <- function(input, output, session) {
   output$plot <- renderPlot({
     
     polar_bears %>% 
-      ggplot(aes(x=popn, 
-                 y=.data[[input$y]]))+
-      geom_boxplot()
+      ggplot(aes(x=.data[[input$x]], 
+                 y= un_creat_ratio,
+                 fill=popn))+
+      geom_boxplot(alpha=0.8)+
+      theme_linedraw()
     
   })
   
