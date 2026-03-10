@@ -123,6 +123,7 @@ goi_blastn_hit
 **9. From the same organism, identify 5 other annotated genes? Do these genes suggest about the biology or virulence of this bacterium?** *Annotated genes can be found in the "CDS" section of the GenBank file. You can also find genes by going to summary page for the organism and looking at the "View annotated genes" section.*
 ```{r}
 annotated_genes <- readDNAStringSet("sequence.txt")
+annotated_genes
 ```
 
 ```{r}

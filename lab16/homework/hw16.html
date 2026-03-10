@@ -11,7 +11,7 @@
 
 <meta name="author" content="Ruolin Huang" />
 
-<meta name="date" content="2026-03-09" />
+<meta name="date" content="2026-03-10" />
 
 <title>Homework 16</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Homework 16</h1>
 <h4 class="author">Ruolin Huang</h4>
-<h4 class="date">2026-03-09</h4>
+<h4 class="date">2026-03-10</h4>
 
 </div>
 
@@ -510,21 +510,11 @@ Accession Link)</strong></p>
 ##  [9] &quot;per_ident&quot;       &quot;acc_len&quot;         &quot;accession&quot;</code></pre>
 <pre class="r"><code>goi_01_blastn %&gt;% 
   select(description, scientific_name, max_score, query_cover, e_value, per_ident, accession) %&gt;% 
-  slice_min(e_value, n=1)</code></pre>
-<pre><code>## # A tibble: 100 × 7
-##    description scientific_name max_score query_cover e_value per_ident accession
-##    &lt;chr&gt;       &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;    
-##  1 Yersinia p… Yersinia pestis       688 99%               0      99.2 &quot;=HYPERL…
-##  2 Yersinia p… Yersinia pestis       688 99%               0      99.2 &quot;=HYPERL…
-##  3 Yersinia p… Yersinia pestis       688 100%              0      99.0 &quot;=HYPERL…
-##  4 Yersinia p… Yersinia pestis       688 99%               0      99.2 &quot;=HYPERL…
-##  5 Yersinia p… Yersinia pestis       688 100%              0      99.0 &quot;=HYPERL…
-##  6 Yersinia p… Yersinia pestis       688 100%              0      99.0 &quot;=HYPERL…
-##  7 Yersinia p… Yersinia pestis       688 99%               0      99.2 &quot;=HYPERL…
-##  8 Yersinia p… Yersinia pestis       688 99%               0      99.2 &quot;=HYPERL…
-##  9 Yersinia p… Yersinia pestis       688 99%               0      99.2 &quot;=HYPERL…
-## 10 Yersinia p… Yersinia pestis       688 99%               0      99.2 &quot;=HYPERL…
-## # ℹ 90 more rows</code></pre>
+  slice_head(n=1)</code></pre>
+<pre><code>## # A tibble: 1 × 7
+##   description  scientific_name max_score query_cover e_value per_ident accession
+##   &lt;chr&gt;        &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;    
+## 1 Yersinia pe… Yersinia pestis       688 99%               0      99.2 &quot;=HYPERL…</code></pre>
 <p><strong>7. Based on the blastx and blastn results, what do you think
 this gene is and what bacteria do you think it came from?</strong></p>
 <pre><code>I think this gene is minor capsid protein, and it came from Yersinia pestis.</code></pre>
@@ -558,6 +548,30 @@ annotated_genes</code></pre>
 ## [102]   213 ATGAAAAATATAACTTCTAATT...ACTTGCCGTAAGAACCCATTAA lcl|NZ_CP177713.1...
 ## [103]  2367 ATGTCCAAAGCCATGACCAGAG...ATCTCGTATCATTCTTGGGTAA lcl|NZ_CP177713.1...
 ## [104]  1236 ATGACCGCTACTGCACTACAGC...GGTTCAGAAGATCTTCGGTTAA lcl|NZ_CP177713.1...</code></pre>
+<pre class="r"><code>annotated &lt;- read_tsv(&quot;ncbi_dataset.tsv&quot;)</code></pre>
+<pre><code>## Rows: 8 Columns: 13
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;\t&quot;
+## chr (7): Accession, Orientation, Name, Symbol, Gene Type, Protein accession,...
+## dbl (4): Begin, End, Gene ID, Protein length
+## lgl (2): Chromosome, Transcripts accession
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>annotated</code></pre>
+<pre><code>## # A tibble: 8 × 13
+##   Accession   Begin   End Chromosome Orientation Name           Symbol `Gene ID`
+##   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;      &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;      &lt;dbl&gt;
+## 1 NC_017168.1  1961  3289 NA         minus       lysine N(6)-h… &lt;NA&gt;    57973654
+## 2 NC_017168.1  3286  5034 NA         minus       IucA/IucC fam… iucC    57973655
+## 3 NC_017168.1  5031  5981 NA         minus       GNAT family N… &lt;NA&gt;    57973656
+## 4 NC_017168.1  5965  7736 NA         minus       uncharacteriz… &lt;NA&gt;    57977672
+## 5 NC_017168.1  7987  9099 NA         plus        MFS transport… &lt;NA&gt;    57973657
+## 6 NC_017168.1  9047  9241 NA         plus        hypothetical … &lt;NA&gt;    57977673
+## 7 NC_017168.1  9389 10222 NA         minus       intradiol rin… &lt;NA&gt;    57973658
+## 8 NC_017168.1 10599 11975 NA         minus       peptidase      &lt;NA&gt;    57973659
+## # ℹ 5 more variables: `Gene Type` &lt;chr&gt;, `Transcripts accession` &lt;lgl&gt;,
+## #   `Protein accession` &lt;chr&gt;, `Protein length` &lt;dbl&gt;, `Locus tag` &lt;chr&gt;</code></pre>
 <p>Yes, these genes suggest about the biology or virulence of this
 bacterium.</p>
 <p><strong>10. Now that you have an idea of this bacteria’s identity,
