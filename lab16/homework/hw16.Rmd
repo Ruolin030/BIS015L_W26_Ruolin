@@ -106,7 +106,7 @@ names(goi_01_blastn)
 ```{r}
 goi_01_blastn %>% 
   select(description, scientific_name, max_score, query_cover, e_value, per_ident, accession) %>% 
-  slice_min(e_value, n=1)
+  slice_head(n=1)
 ```
 
 **7. Based on the blastx and blastn results, what do you think this gene is and what bacteria do you think it came from?**
@@ -123,8 +123,8 @@ goi_blastn_hit
 **9. From the same organism, identify 5 other annotated genes? Do these genes suggest about the biology or virulence of this bacterium?** *Annotated genes can be found in the "CDS" section of the GenBank file. You can also find genes by going to summary page for the organism and looking at the "View annotated genes" section.*
 ```{r}
 annotated_genes <- readDNAStringSet("sequence.txt")
-annotated_genes
 ```
+
 ```{r}
 annotated <- read_tsv("ncbi_dataset.tsv")
 annotated
