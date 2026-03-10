@@ -1,0 +1,9 @@
+Accession	Begin	End	Chromosome	Orientation	Name	Symbol	Gene ID	Gene Type	Transcripts accession	Protein accession	Protein length	Locus tag
+NC_017168.1	1961	3289		minus	lysine N(6)-hydroxylase/L-ornithine N(5)-oxygenase family protein		57973654	protein-coding		WP_002211647.1	442	A1122_RS00010
+NC_017168.1	3286	5034		minus	IucA/IucC family protein	iucC	57973655	protein-coding		WP_002211648.1	582	A1122_RS00015
+NC_017168.1	5031	5981		minus	GNAT family N-acetyltransferase		57973656	protein-coding		WP_002211649.1	316	A1122_RS00020
+NC_017168.1	5965	7736		minus	uncharacterized gene		57977672	pseudogene				A1122_RS21785
+NC_017168.1	7987	9099		plus	MFS transporter		57973657	protein-coding		WP_002231373.1	370	A1122_RS00035
+NC_017168.1	9047	9241		plus	hypothetical protein		57977673	protein-coding		WP_002228661.1	64	A1122_RS21790
+NC_017168.1	9389	10222		minus	intradiol ring-cleavage dioxygenase		57973658	protein-coding		WP_002211652.1	277	A1122_RS00040
+NC_017168.1	10599	11975		minus	peptidase		57973659	protein-coding		WP_002211654.1	458	A1122_RS00045
