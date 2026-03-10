@@ -1,6 +1,6 @@
 ---
-title: "Homework YY"
-author: "Your Name Here"
+title: "Homework 16"
+author: "Ruolin Huang"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -81,9 +81,10 @@ goi_01_blastx_top_10
 ```{r}
 goi_01_blastx_top_10 %>%
   ggplot(aes(x=scientific_name, y=per_ident))+
-  geom_col(na.rm=T, color="grey", alpha=0.8, fill="pink")+
+  geom_col(na.rm=T, alpha=0.8, fill="pink")+
   coord_flip()+
-  labs(title="Different in Percent Indentity for Scientific Name", x="Scientific Name", y="Percent Identity")
+  labs(title="Difference in Percent Identity for Scientific Name", x="Scientific Name", y="Percent Identity")+
+  theme_bw()
 ```
 
 
@@ -110,24 +111,26 @@ goi_01_blastn %>%
 
 **7. Based on the blastx and blastn results, what do you think this gene is and what bacteria do you think it came from?**
 ```{}
-I think this gene is Enterobacterales, and it came from Yersinia pestis.
+I think this gene is minor capsid protein, and it came from Yersinia pestis.
 ```
 
 **8. For the top blastn hit, click on the accession link for this bacteria and download the coding sequences as a FASTA Protein file. Read the fasta file into R using the Biostrings package and store it in an object called `goi_blastn_hit`.**
 ```{r}
-goi_blastn_hit <- readDNAStringSet("fasta_protein")
+goi_blastn_hit <- readAAStringSet("fasta_protein")
+goi_blastn_hit
 ```
 
 **9. From the same organism, identify 5 other annotated genes? Do these genes suggest about the biology or virulence of this bacterium?** *Annotated genes can be found in the "CDS" section of the GenBank file. You can also find genes by going to summary page for the organism and looking at the "View annotated genes" section.*
 ```{r}
-
+annotated_genes <- readDNAStringSet("sequence.txt")
+annotated_genes
 ```
+Yes, these genes suggest about the biology or virulence of this bacterium.
 
 **10. Now that you have an idea of this bacteria's identity, what illness/disease do you think the patient has? What is the historical or public health significance of this disease? Based on the gene you identified, what role might this gene play in pathogenicity?**
 ```{}
-
+The patient has plague, which caused the Black Death in the 14th century. This pandemic killed millions of people in Europe and Asia and had major social and economic consequences. Capsid proteins are associated with bacteriophages. These viral genes can sometimes carry toxins.
 ```
-
 
 ## Knit and Upload
 Please knit your work as an .html file and upload to Canvas. Homework is due before the start of the next lab. No late work is accepted. Make sure to use the formatting conventions of RMarkdown to make your report neat and clean! 

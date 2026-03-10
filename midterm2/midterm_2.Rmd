@@ -133,6 +133,14 @@ polar_bears %>%
              max_creatinine=max(creatinine))
 ```
 
+```{r}
+polar_bears %>% 
+  select(urea_nitrogen, creatinine) %>% 
+  summary()
+```
+
+
+
 6. (3 points) As explained above, the ratio of `urea_nitrogen` to `creatinine` is used as an index of fasting. To calculate the ratio, we need to multiply `urea_nitrogen` by 0.466, then divide by `creatinine`. Create a new variable called `un_creat_ratio` that contains this calculation.
 ```{r}
 polar_bears <- polar_bears%>% 
