@@ -1,0 +1,282 @@
+---
+title: "project"
+output: html_document
+---
+
+Body Mass: The body mass of each mammalian species, measured in grams (g)
+Longevity: The expected lifespan of each species, measured in years.
+Gestation Length: The length of pregnancy for each species, measured in days
+
+Placental mammals (eutherian mammals) have very different pregnancy lengths. Scientists have often thought that pregnancy length is related to other traits, especially body size and lifespan.
+To study this, researchers analyzed 845 living mammal species and used evolutionary methods that consider how species are related through a phylogenetic tree.
+The relationship between gestation length, body mass, and lifespan is not the same for all mammals, so, the connection between these traits changes depending on the mammal group.
+Different evolutionary adaptations—such as living in water or evolving flight—may have influenced these changes.
+
+Life-history traits describe how organisms grow, reproduce, and survive. Gestation length varies widely among placental mammals and is often linked to body size and lifespan. This study analyzes 845 mammal species to understand how gestation length evolved and how it relates to body mass and lifespan across mammalian evolution.
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(janitor)
+library(ggmap)
+library(leaflet)
+```
+
+```{r}
+gestation <- read_csv("data/Danis and Rokas 2024 Gestation Length/Data_S1.csv") %>% 
+  clean_names()
+```
+
+```{r}
+names(gestation)
+```
+
+```{r}
+glimpse(gestation)
+```
+
+```{r}
+gestation %>% 
+  distinct(order)
+```
+
+```{r}
+gestation %>% 
+  filter(order %in% (c("Chiroptera", "Pinnipeds", "Perissodactyla", "Pilosa", "Afrosoricida"))) %>%
+  ggplot(aes(x=log(longevity), y=log(gestationength), color=order))+
+  geom_point()+
+  geom_smooth(method=lm, se=F)+
+  labs(title="Gestation Length by Body Mass across mammals", x="Body Mass (g)", y="Gestation Length (years)")+
+  theme_bw()
+```
+
+```{r}
+gestation %>% 
+  filter(order %in% (c("Cetacea"))) %>% 
+  ggplot(aes(x=log(bodymass), y=log(gestationength), color=order))+
+  geom_point()+
+  geom_smooth(method=lm, se=F)+
+  labs(title="Gestation Length by Body Mass across mammals", x="Body Mass (g)", y="Gestation Length (years)")+
+  theme_bw()
+```
+
+```{r}
+gestation %>% 
+  filter(order %in% (c("Lagomorpha", "Old_World_monkeys", "Eulipotyphla"))) %>% 
+  ggplot(aes(x=log(bodymass), y=log(gestationength), color=order))+
+  geom_point()+
+  geom_smooth(method=lm, se=F)+
+  labs(title="Gestation Length by Body Mass across mammals", x="Body Mass (g)", y="Gestation Length (years)")+
+  theme_bw()
+```
+
+
+
+test:  whether larger mammals tend to have longer pregnancies.
+In Carnivora and Cetacea, there is a significant relationship: Larger species generally have longer gestation periods.
+In Yangochiroptera and Yinpterochiroptera (bats), there is no significant relationship: Body size does not strongly predict gestation length in these groups.
+```{r}
+gestation %>% 
+  filter(order %in% c("Artiodactyla", "Carnivora", "New_World_monkeys")) %>%
+  ggplot(aes(x=log(bodymass), y=log(gestationength), color=order))+
+  geom_point(size=1)+
+  geom_smooth(method=lm, se=F)+
+  labs(title="Gestation Length by Body Mass across mammals", x="Body Mass (g)", y="Gestation Length (years)")+
+  theme_bw()
+```
+
+```{r}
+gestation %>% 
+  filter(order=="Rodentia") %>%
+  ggplot(aes(x=log(bodymass), y=log(gestationength), color=order))+
+  geom_point(size=1)+
+  geom_smooth(method=lm, se=F)+
+  labs(title="Gestation Length by Body Mass across mammals", x="Body Mass (g)", y="Gestation Length (years)")+
+  theme_bw()
+```
+
+```{r}
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Mammalian Gestation Predictor"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      helpText("Adjust parameters to predict gestation length."),
+      
+      sliderInput("mass", "Body Mass (g):", min = 2, max = 2000000, value = 70, step = 1000),
+      sliderInput("longevity", "Lifespan (years):", min = 1, max = 200, value = 20),
+      selectInput("order", "Taxonomic Order:", 
+                  choices = sort(unique(gestation$order))),
+      
+      hr(),
+      tags$b("Regression Equation:"),
+      textOutput("equation")
+    ),
+    
+    mainPanel(
+      h3("Prediction Results"),
+      wellPanel(
+        textOutput("prediction_text")
+      ),
+      plotOutput("distPlot")
+    )
+  )
+)
+
+
+server <- function(input, output) {
+  
+  # 1. Regression Model
+  # Using log-log transformation for biological scaling laws
+  model <- lm(log(gestation) ~ log(bodymass) + log(longevity) + order, data = gestation)
+  
+  # 2. Output: Regression Equation Text
+  output$equation <- renderText({
+    "log(gestation) = β₀ + β₁(log bodymass) + β₂(log longevity) + order_effect"
+  })
+  
+  # 3. Output: Prediction
+  output$prediction_text <- renderText({
+    new_data <- data.frame(
+      bodymass = input$mass, 
+      Lifespan = input$longevity, 
+      Order = input$order
+    )
+    # Predict and convert back from log scale
+    pred_log <- predict(model, newdata = new_data)
+    pred_days <- round(exp(pred_log), 1)
+    
+    paste0("Predicted Gestation Length: ", pred_days, "days")
+  })
+  
+  # 4. Output: Plot
+  output$distPlot <- renderPlot({
+    ggplot(gestation, aes(x = bodymass, y = gestation, color = order)) +
+      geom_point(alpha = 0.5) +
+      scale_x_log10() + scale_y_log10() +
+      # Add the predicted point to the plot
+      annotate("point", x = input$mass, y = exp(predict(model, data.frame(bodymass=input$mass, Lifespan=input$longevity, order=input$order))), 
+               color = "black", size = 5, shape = 18) +
+      labs(title = "Gestation vs Body Mass (Log Scale)",
+           subtitle = "Diamond indicates your current prediction",
+           x = "Body Mass (kg)", y = "Gestation (days)") +
+      theme_minimal()
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+```{r}
+library(shiny)
+library(ggplot2) 
+
+ui <- fluidPage(
+  titlePanel("Mammalian Gestation Predictor"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      helpText("Adjust parameters to predict gestation length."),
+      
+      sliderInput("mass", "Body Mass (g):", min = 2, max = 2000000, value = 70, step = 1000),
+      sliderInput("longevity", "Lifespan (years):", min = 1, max = 200, value = 20),
+      selectInput("order", "Taxonomic Order:", 
+                  choices = sort(unique(gestation$order))),
+      
+      textOutput("equation")
+    ),
+    
+    mainPanel(
+      wellPanel(
+        textOutput("prediction_text")
+      ),
+      plotOutput("distPlot")
+    )
+  )
+)
+
+server <- function(input, output) {
+  
+  model <- lm(log(gestationength) ~ log(bodymass) + log(longevity), data = gestation)
+  
+  output$equation <- renderText({
+    "log(gestation) = β₀ + β₁(log bodymass) + β₂(log longevity) + order"
+  })
+  
+  output$prediction_text <- renderText({
+    
+    new_data <- data.frame(
+      bodymass = input$mass, 
+      longevity = input$longevity, 
+      order = input$order
+    )
+    
+    pred_log <- predict(model, newdata = new_data)
+    pred_days <- round(exp(pred_log), 1)
+    
+    paste0("Predicted Gestation Length: ", pred_days, " days")
+  })
+  
+  output$distPlot <- renderPlot({
+     #current_prediction_value
+    current_pred_val <- exp(predict(model, data.frame(bodymass=input$mass, # exp() gives the actual predicted gestation length in days
+                                                      longevity=input$longevity, 
+                                                      order=input$order)))
+    
+    gestation %>%
+    ggplot(aes(x = bodymass, y = gestationength, color = order)) +
+      geom_point(alpha = 0.5) +
+      scale_x_log10()+
+      annotate("point", x = input$mass, y = current_pred_val, 
+               color = "black", size = 5, shape = 18) +
+      labs(title = "Gestation vs Body Mass (Log Scale)",
+           subtitle = "Black diamond indicates your current prediction",
+           x = "Body Mass (g)", y = "Gestation Length (days)") +
+      theme_bw()
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+```{r}
+summary(model)
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(gestation, aes(x = bodymass, y = gestationength)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = lm, se = F) +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(
+    x = "Body Mass (log scale)",
+    y = "Gestation Length (log scale)",
+    title = "Relationship Between Body Mass and Gestation Length"
+  )
+```
+```{r}
+ggplot(gestation, aes(x = bodymass, y = gestationength, color = order)) +
+  geom_point(alpha=0.6) +
+  geom_smooth(method=lm, se=FALSE) +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(x="Body Mass",
+    y="Gestation Length",
+    title="Body Mass vs Gestation Length Across Mammal Orders")
+```
+```{r}
+ggplot(gestation, aes(x = order, y = gestationength)) +
+  geom_boxplot() +
+  scale_y_log10() +
+  theme(axis.text.x = element_text(angle=45, hjust=1)) +
+  labs(
+    x="Mammalian Order",
+    y="Gestation Length",
+    title="Variation in Gestation Length Across Mammal Orders"
+  )
+```
+
